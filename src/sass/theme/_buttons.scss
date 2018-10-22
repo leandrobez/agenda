@@ -1,0 +1,62 @@
+.il-btn--group{
+    width: 100%;
+    padding: .45rem 0;
+    display: flex;
+    justify-content: center;
+}
+input[type='submit'],
+a.il-btn,
+button.il-btn {
+  font-size: 0.9em;
+  word-spacing: 2px;
+  font-weight: 700;
+  padding: 0.5em 1.3em;
+  background-color: $btn-background-color;
+  text-transform: uppercase;
+  border: 1px solid $btn-border-color;
+  transition: all 0.5s;
+  text-align: center;
+  text-decoration: none;
+  letter-spacing: 4px;
+  visibility: visible;
+  &.left {
+    margin-left: 0;
+  }
+  &.right {
+    margin-right: 0;
+  }
+  &.auto {
+    margin: auto;
+  }
+  &.il-btn--big{
+    width: 340px;
+    @media screen and (min-width: 1171px) {
+      width: 380px;
+    }
+  }
+  &.il-btn--small{
+    width: 240px;
+    @media screen and (min-width: 1171px) {
+      width: 280px;
+    }
+  }
+  &.il-btn--small,
+  &.il-btn--header{
+      color: white;
+  }
+}
+input[type='submit']:focus,
+a.il-btn:focus,
+button.il-btn:focus,
+a.il-btn:hover,
+button.il-btn:hover,
+input[type='submit']:hover {
+  background-color: $btn-background-color;
+  border: 1px solid $btn-border-color-hover;
+}
+
+input[type='submit'].il-btn.il-button--hidden,
+a.il-btn.il-button--hidden,
+button.il-btn.il-button--hidden{
+  visibility:hidden;
+}

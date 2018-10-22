@@ -1,0 +1,307 @@
+$calendar-height: 700px;
+$calendar-controller-height: 700px;
+$calendar-content-width: 420px;
+$li-height: $calendar-controller-height/21;
+$shadow-y: 15px;
+$height-event-item: ($calendar-height/10 - 0.6 * 16px);
+/**color*/
+$back-content: #2b4450;
+$back-controller: #678797;
+$shadow: #c4baba;
+$line-event: #473737;
+$li-background: #948a8a;
+$li-background-odd: #796a6a;
+$li-color: #1a2220;
+
+.il-calendar--container {
+  margin-top: 3rem;
+  align-items: center;
+  display: flex;
+  width: 100%;
+  height: $calendar-height;
+  justify-content: center;
+  & .il-calendar--content {
+    background: $back-content;
+    border-radius: 4px;
+    height: 100%;
+    width: 100%;
+    max-width: $calendar-content-width;
+    perspective: 1000;
+    transition: 0.9s;
+    transform-style: preserve-3d;
+    box-shadow: 5px 0px 7px 3px rgba(190, 186, 186, 0.6);
+    & .il-calendar--front {
+      transform: rotateY(0deg);
+      & .il-current--date {
+        border-bottom: 1px solid rgba(73, 114, 133, 0.6);
+        display: flex;
+        justify-content: space-between;
+        padding: 30px 40px;
+        & h1 {
+          color: #dfebed;
+          font-size: 1.4em;
+          font-weight: 300;
+        }
+      }
+      & .il-choices--month {
+        display: flex;
+        justify-content: space-between;
+        & i {
+          color: #dfebed;
+          display: block;
+          cursor: pointer;
+          margin: 0 0.5rem;
+        }
+      }
+      & .il-current--month {
+        & ul.il-weeks--days {
+          color: #dfebed;
+          display: flex;
+          justify-content: space-between;
+          font-weight: 600;
+          padding: 30px 40px;
+          & li {
+            text-align: center;
+          }
+        }
+        & .il-weeks {
+          color: #fff;
+          display: flex;
+          flex-direction: column;
+          padding: 0 40px;
+          & .il-week--item {
+            display: flex;
+            font-size: 1.2rem;
+            font-weight: 300;
+            justify-content: space-between;
+            width: 100%;
+            & span {
+              line-height: 50px;
+              text-align: center;
+              width: 50px;
+              height: 50px;
+              &.il-last--month {
+                opacity: 0.3;
+              }
+              &.il-next--month {
+                color: #ebd9d8;
+                opacity: 0.4;
+              }
+              &.active {
+                background: #f78536;
+                border-radius: 50%;
+              }
+              &.il-today {
+                color: #0aaf41;
+                font-weight: 700;
+                opacity: 0.8;
+                border: 1px solid white;
+              }
+              &:not(.il-today):hover,
+              &:not(.il-last-month):hover,
+              &:not(.il-next-month):hover {
+                cursor: pointer;
+                font-weight: 600;
+                border-radius: 50%;
+              }
+
+              &.il-event {
+                position: relative;
+                &:after {
+                  content: '•';
+                  color: #f78536;
+                  font-size: 1.7rem;
+                  position: absolute;
+                  right: -4px;
+                  top: -4px;
+                }
+              }
+
+              &:hover {
+                border: 1px solid white;
+
+                background: orange;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    & .il-calendar--back {
+      height: 100%;
+      transform: rotateY(180deg);
+
+      & input {
+        background: none;
+        border: none;
+        border-bottom: 1px solid rgba(73, 114, 133, 0.6);
+        color: #dfebed;
+        font-size: 1.4em;
+        font-weight: 300;
+        padding: 30px 40px;
+        width: 100%;
+      }
+      &--info {
+        color: #dfebed;
+        display: flex;
+        flex-direction: column;
+        font-weight: 600;
+        font-size: 1.2rem;
+        padding: 30px 40px;
+        & div:not(.observations) {
+          margin-bottom: 40px;
+        }
+        & span {
+          font-weight: 300;
+        }
+
+        & .il-date {
+          display: flex;
+          justify-content: space-between;
+          & p {
+            width: 100%;
+          }
+        }
+      }
+      &--actions {
+        bottom: 0;
+        border-top: 1px solid rgba(73, 114, 133, 0.6);
+        display: flex;
+        justify-content: space-between;
+        position: absolute;
+        width: 100%;
+        & button {
+          background: none;
+          border: 0;
+          color: #fff;
+          font-weight: 600;
+          letter-spacing: 3px;
+          margin: 0;
+          padding: 30px 0;
+          text-transform: uppercase;
+          width: 50%;
+          &:first-of-type {
+            border-right: 1px solid rgba(73, 114, 133, 0.6);
+          }
+          &:hover {
+            background: #497285;
+            cursor: pointer;
+          }
+          &:active {
+            background: #5889a0;
+            outline: none;
+          }
+        }
+      }
+    }
+  }
+  & .il-calendar--controller {
+    width: 100%;
+    height: 100%;
+    background: $back-controller;
+    border-radius: 0 4px 4px 0;
+    padding: 0 0 0 0.5rem;
+    display: flex;
+    & ul.il-timeline--list {
+      margin-right: 7px;
+      margin-top: 1.5rem;
+      & li {
+        text-align: center;
+        position: relative;
+        height: $height-event-item / 2;
+        &:after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 1px;
+          background: $line-event;
+          z-index: 2;
+        }
+        &:last-of-type:after {
+          display: none;
+        }
+        & span {
+          font-size: 0.89rem;
+        }
+      }
+    }
+    & .il-calendar--events {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: $shadow;
+      border: 1px solid $back-controller;
+      & ul.il-docas--list {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        position: absolute;
+        & li {
+          height: 1.5rem;
+          background: $back-controller;
+          width: 100%;
+          text-align: center;
+          display: flex;
+          & span {
+            color: $shadow;
+            text-align: center;
+            display: block;
+            width: 50%;
+            &:nth-child(2) {
+              margin-left: 0.25rem;
+              font-size: 1rem;
+              cursor: pointer;
+            }
+          }
+          &:nth-child(odd) {
+            background: darken($back-controller, 15%);
+          }
+        }
+      }
+      & .il-events--group {
+        width: 25%;
+        display: flex;
+        position: relative;
+        top: 1.5rem;
+        & .il-doca {
+          width: 100%;
+          height: $height-event-item;
+          & .il-doca--item {
+            padding: 0.3rem;
+            height: 100%;
+            text-align: center;
+            & span.il-status {
+              display: block;
+              width: 100%;
+              color: #29310b;
+            }
+          }
+        }
+        &:nth-child(odd) .il-doca .il-doca--item:nth-child(even) {
+          background: darken($back-controller, 15%);
+        }
+        &:nth-child(odd) .il-doca .il-doca--item:nth-child(odd) {
+          background: darken($back-controller, 7%);
+        }
+        &:nth-child(even) .il-doca .il-doca--item:nth-child(odd) {
+          background: rgb(213, 214, 219);
+        }
+        &:nth-child(even) .il-doca .il-doca--item:nth-child(even) {
+          background: rgb(201, 208, 241);
+        }
+      }
+    }
+  }
+
+  & .flip {
+    transform: rotateY(180deg);
+  }
+
+  & .il-calendar--front,
+  .il-calendar--back {
+    backface-visibility: hidden;
+  }
+}

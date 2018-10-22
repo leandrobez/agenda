@@ -1,0 +1,32 @@
+.il-video--wrapper{
+	width: 100%;
+	height: $slider-height;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	& iframe{
+		box-shadow: 3px 4px 9px 1px rgba(0,0,0,0.75);
+	}
+
+	/*.video-js {
+	  /* The base font size controls the size of everything, not just text.
+	     All dimensions use em-based sizes so that the scale along with the font size.
+	     Try increasing it to 15px and see what happens. *
+	  font-size: 10px;
+	  width: 100%;
+	  max-width: 696px;
+	  /* The main font color changes the ICON COLORS as well as the text *
+	  color: #2B333F;//$primary-foreground-color;
+	  & .vjs-control-bar,
+	  & .vjs-big-play-button,
+	  & .vjs-menu-button .vjs-menu-content {
+	    /* IE8 - has no alpha support *
+	    background-color: #2B333F;//$primary-background-color;
+	    /* Opacity: 1.0 = 100%, 0.0 = 0% *
+	    background-color: rgba(#2B333F, 0.7);
+	
+	  //}
+	}*/
+
+}

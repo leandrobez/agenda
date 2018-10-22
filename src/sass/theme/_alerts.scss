@@ -1,0 +1,30 @@
+.il-alert {
+    width: 100%;
+    height: 2.5rem;
+    padding: 0.25rem 0;
+    display: none;
+    transition: 450ms;
+    &--info {
+      background: #128d6c;
+      & p {
+        color: #fecefc;
+        line-height: 2rem;
+        text-align: center;
+        margin: 0;
+      }
+    }
+    &--danger {
+        background: #d84622;
+        & p {
+          color: #fecefc;
+          line-height: 2rem;
+          text-align: center;
+          margin: 0;
+        }
+      }
+    &.il-alert--show {
+      display: block;
+      transition: 450ms;
+    }
+  }
+  

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="description" content="Um novo conceito em estúdio de pilates." />
+    <meta name="keywords" content="pilates,corealign,reabilitação,fisioterapia,saúde,estúdio,studio" />
+    <meta http-equiv="content-language" content="pt-br" />
+    <meta name="author" content="www.internetlojas.com" />
+    <title>Empresa XXXyyZ - Agendamentos</title>
+    <link rel="stylesheet" type="text/css" href="css/styles.css" />
+</head>
+
+<body>
+    <div class="il-container">
+        <!--HEADER-->
+        <header class="il-container--item il-header il-color-background--primary">
+            <div class="il-container--wrapper">
+                <h1 class="text-center il-color-texture--border il-title1--section">Sistema de Agendamento de Carga e
+                    Descarga</h1>
+                <h4>Agenda da semana - <span id="il-data"></span></h4>
+            </div>
+        </header>
+        <!--nav-->
+        <nav class="il-nav--main il-color-background--dark">
+            <div class="il-container--wrapper">
+                <ul class="il-nav--list">
+                    <li>
+                        <a href="#" class="il-nav--link generic-anchor">
+                            vai a imagem
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#ficha" class="il-nav--link generic-anchor">
+                            Operador Beltrano Rico
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!--/* ====== Calendário ====== */-->
+        <div class="il-container--wrapper">
+            <div class="il-calendar--container">
+                <div class="il-calendar--content">
+                    <!--FRONT-->
+                    <div class="il-calendar--front">
+                        <div class="il-current--date">
+                            <h1 class="il-year"></h1>
+                            <h1 class="il-today"></h1>
+                        </div>
+                        <div class="il-choices--month">
+
+                            <i class="mdi mdi-12px mdi-minus" id="prev-month"></i>
+                            <i class="mdi mdi-12px mdi-plus" id="next-month"></i>
+                        </div>
+                        <div class="il-current--month">
+                            <ul class="il-weeks--days">
+                                <li>S</li>
+                                <li>T</li>
+                                <li>Q</li>
+                                <li>Q</li>
+                                <li>S</li>
+                                <li>S</li>
+                                <li>D</li>
+                            </ul>
+                            <div class="il-weeks">
+
+                            </div>
+                        </div>
+                    </div>
+                    <!--BACK-->
+                    <div class="il-calendar--back">
+                        <input placeholder="What's the event?">
+                        <div class="il-calendar--info">
+                            <div class="il-date">
+                                <p class="il-info--date">
+                                    date: <span>Jan 15th, 2018</span>
+                                </p>
+                                <p class="il-info--titme">
+                                    Time: <span>6:35 PM</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="il-calendar--actions">
+                            <button class="il-calendar--save">
+                                Save <i class="mdi mdi-12px mdi-mark"></i>
+                            </button>
+                            <button class="il-calendar--dismiss">
+                                Save <i class="mdi mdi-12px mdi-close"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="il-calendar--controller">
+                    <ul class="il-timeline--list"></ul>
+                    <div class="il-calendar--events">
+                        <ul class="il-docas--list">
+                            <li>
+                                <span>doca1</span>
+                                <span id="add-doca1">+</span>
+                            </li>
+                            <li>
+                                <span>doca2</span>
+                                <span id="add-doca2">+</span>
+                            </li>
+                            <li>
+                                <span>doca3</span>
+                                <span id="add-doca3">+</span>
+                            </li>
+                            <li>
+                                <span>doca4</span>
+                                <span id="add-doca4">+</span>
+                            </li>
+                        </ul>
+                        <div class="il-events--group doca1">
+                            <!--<div class="il-doca">
+                                <div class="il-doca--item">
+                                    <span class="il-status">Carregando</span>
+                                </div>
+                            </div>-->
+                        </div>
+                        <div class="il-events--group doca2">
+
+                        </div>
+                        <div class="il-events--group doca3">
+
+                        </div>
+                        <div class="il-events--group doca4">
+
+                        </div>
+                        <!--<div class="il-scheduller--form">
+                        <div id="titular-new-reminder">
+                            <h3><i class="mdi mdi-12px mdi-plus"></i> Novo compromisso</h3>
+                        </div>
+                        <br>
+
+                        <div class="il-form--fields">
+                            <input type="text" class="class" placeholder="Aula">
+                            <input type="text" class="il-student" placeholder="Aluno">
+                            <textarea class="form-control" id="todo"></textarea>
+                            <br>
+                            <button type="button" class="il-btn il-btn--success =" id="buttomSave"><i class="mdi mdi-12px mdi-check"></i>
+                                Salvar</button>
+                        </div>
+
+                        <div id="error" class="il-alert il-alert--danger"></div>
+
+                    </div>-->
+                    </div>
+                </div>
+            </div>
+
+            <!--/* ====== Dias da Semana ====== */-->
+            <ul class="il-scheduler--week" id="week-list">
+
+            </ul>
+            <!--/* ====== agenda do professor ou professora ====== */-->
+            <div class="il-scheduler--teacher-content il-scheduler--table" id="il-scheduler">
+                <table class="il-table il-zebra">
+                    <caption>Statement Summary</caption>
+                    <thead>
+                        <tr>
+
+                            <th id="tr-day">Horário</th>
+                            <th>Aula</th>
+                            <th>Aluno Previsto</th>
+                            <th>Aluno Presente</th>
+                            <th>Observação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+
+                            <td>07:00 - 08:00</td>
+                            <td>CoreAlign</td>
+                            <td>
+                                <ul class="il-students--previstos">
+                                    <li>aluno1</li>
+                                    <li>aluno2</li>
+                                    <li>aluno3</li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul class="il-students--presents">
+                                    <li>aluno1</li>
+                                    <li></li>
+                                    <li>aluno3</li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul class="il-students--report">
+                                    <li>O Aluno 2 faltou</li>
+                                    <li>Houve substituição do Aluno 2 pelo Aluno 5</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr class="active">
+                            <td>08:00 - 09:00</td>
+                            <td>CoreAlign</td>
+                            <td>
+                                <ul class="il-students--previstos">
+                                    <li>aluno6</li>
+                                    <li>aluno7</li>
+                                    <li>aluno8</li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul class="il-students--presents">
+                                    <li>aluno6</li>
+                                    <li>aluno7</li>
+                                    <li>aluno8</li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul class="il-students--report">
+                                    <li>Nenhuma alteração</li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <script src="js/calendar.js"></script>
+        <script src="js/main.js"></script>
+        <script>
+
+    /*document.addEventListener("DOMContentLoaded", function (event) {
+			/*var str = window.location.search.substr(1);
+			if (str.search("gettoken=true") != -1) {
+					// code foi enviado então o primeiro passo é dado chamando a função
+					getToken()
+}*
+      // Get calendars
+      jsCalendar.autoFind();
+      console.log(ilScheduler.schedulerInit())
+    });*/
+        </script>
+</body>
+
+</html>

@@ -1,0 +1,122 @@
+.il-color {
+	&-background {
+		&--bg {
+			background: $borderColor;
+		}
+
+		&--primary {
+			background: $firstColor;
+		}
+
+		&--secondary {
+			background: $secondColor;
+		}
+		
+		&--secondary__alt {
+			background: $secondColorAlt;
+		}
+
+		&--tertiary {
+			background: $thirdColor;
+		}
+		
+		&--tertiary__alt {
+			background: $thirdColorAlt;
+		}
+
+		&--accent {
+			background: $accentColor;
+		}
+		
+		&--accent__alt {
+			background: $accentColorAlt;
+		}
+
+		&--dark {
+			background: $darkColor;
+		}
+
+		&--darken {
+			background: $darkenColor;
+		}
+		
+		&--border {
+			background: $borderColor;
+		}
+
+		&--text {
+			background: $textColor;
+		}
+
+		&--body {
+			background: $bodyBg;
+		}
+		
+		&--gradient{
+			background: linear-gradient(to right,$firstColor,$darkColor);
+			width: 100%;
+		}
+		&--gradient__alt{
+			background: linear-gradient(to right,$accentColor,$accentColorAlt);
+			width: 100%;
+		}
+		&--gradient__bg{
+			background: linear-gradient(to right,$accentColor,$bodyBg);
+			width: 100%;
+		}
+	}
+
+	&-texture {
+		&--bg {
+			color: $bodyBg;
+		}
+		&--border {
+			color: $borderColor;
+		}
+		&--text {
+			color: $textColor;
+		}
+		&--primary {
+			color: $firstColor;
+		}
+		&--primary__alt {
+			color: $firstColorAlt;
+		}
+		&--secondary {
+			color: $secondColor;
+		}
+		&--secondory__alt {
+			color: $secondColorAlt;
+		}
+		&--tertiary {
+			color: $thirdColor;
+		}
+		&--tertiary__alt {
+			color: $thirdColorAlt;
+		}
+		&--accent{
+			color: $accentColor;
+		}
+		&--accent__alt{
+			color: $accentColorAlt;
+		}
+		&--dark {
+			color: $darkColor;
+        }
+        &--darken {
+			color: $darkenColor;
+        }
+        &--gradient{
+			background: linear-gradient(to right,$firstColor,$darkColor);
+			width: 100%;
+		}
+		&--gradient__alt{
+			background: linear-gradient(to right,$accentColor,$accentColorAlt);
+			width: 100%;
+		}
+		&--gradient__bg{
+			background: linear-gradient(to right,$accentColor,$bodyBg);
+			width: 100%;
+		}
+	}
+}

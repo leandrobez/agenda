@@ -1,0 +1,36 @@
+@function rem($px) {
+	@return ($px / 16px) * 1rem;
+}
+
+// Font sizes
+$fontSizes: ( il-title1--section: rem(36px),
+il-title2--section: rem(24px),
+il-title3--section: rem(20px),
+il-title-normal--section: rem(16px),
+il-title-small--section: rem(14px),
+);
+
+// Get font size from map
+@function fontSize($size) {
+	@if map-has-key($fontSizes,
+	$size) {
+		@return map-get($fontSizes,
+		$size)
+	}
+	@else {
+		@error '$size is not valid, valid values are t1, t2, t3, normal, small, smaller'
+	}
+}
+@mixin il-t1 {
+    font-size: fontSize(il-title1--section);
+    
+}
+
+@mixin il-t2 {
+    font-size: fontSize(il-title2--section);
+    
+}
+
+@mixin il-t3 {
+	font-size: fontSize(il-title3--section);
+}
