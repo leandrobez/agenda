@@ -360,10 +360,12 @@ $li-color: #1a2220;
   & .il-calendar--search {
     position: absolute;
     z-index: 2;
-    width: $width-search;
     top: 0;
-    left: $search-content-width;
-    box-shadow: 3px 0 2px 3px rgba(100, 180, 100, 0.6);
+    left: -100%;
+    width: 1px;
+    opacity: 0;
+    //left: $search-content-width;
+    //box-shadow: 3px 0 2px 3px rgba(100, 180, 100, 0.6);
     padding: 0 0.45rem;
     background: $back-content-dark;
     display: flex;
@@ -401,6 +403,11 @@ $li-color: #1a2220;
             border-top: 1px solid grey;
             margin: .45rem 2rem;
         }
+    }
+    &.il-calendar--search__show{
+        width: $width-search;
+        opacity: 1;
+        left: $search-content-width;
     }
   }
 

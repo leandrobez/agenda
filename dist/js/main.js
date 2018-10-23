@@ -199,7 +199,7 @@ class eventsToDo {
       
     })*/
     datas.forEach((item, index) => {
-      str = item.cliente.search(value);
+      str = item.cliente.search(value.toUpperCase());
       if (str == 0) {
         datas[index].key = index;
         result.push(datas[index]);
@@ -256,8 +256,9 @@ class eventsToDo {
 }
 
 const saveEvent = (index, start) => {
-  let eventstoDo = new eventsToDo(bank);
+  /*let eventstoDo = new eventsToDo(bank);
   let toDo = eventstoDo.generateEvent(start);
+  
   let eventContent = document.querySelector('.il-event--content');
   let eventCaption = document.querySelector(
     '.il-event--content .il-event--caption'
@@ -265,7 +266,9 @@ const saveEvent = (index, start) => {
   eventCaption.innerHTML = `<span>Início: ${toDo.start}</span><span>Tarefa: ${
     toDo.target
   }</span><span>Transporte: ${toDo.transport}</span>`;
-  eventContent.classList.add('il-event--show');
+  //eventContent.classList.add('il-event--show');*/
+  let calendarSearch = document.querySelector('.il-calendar--search');
+  calendarSearch.classList.add('il-calendar--search__show');
 };
 
 /**button for navegate calendar */
@@ -292,12 +295,12 @@ inputSearch.addEventListener('keyup', () => {
     let eventstoDo = new eventsToDo(bank);
     //faz a busca
     let searchs = eventstoDo.search(value);
-    if (searchs.length>0) {
+    if (searchs.length > 0) {
       resultContainer.classList.add('has-result');
       searchs.forEach((search, index) => {
         result += `<span>${search.cod} - ${search.cliente}</span>`;
       });
-      
+
       resultContainer.innerHTML = result;
     } else {
       result = `<span>Nada encontrado!</span>`;
