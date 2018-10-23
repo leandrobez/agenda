@@ -4,12 +4,16 @@ $calendar-content-width: 420px;
 $li-height: $calendar-controller-height/21;
 $shadow-y: 15px;
 $height-event-item: ($calendar-height/10 - 0.6 * 16px);
+$search-content-width: 37.2%;
+$width-search: 100% - $search-content-width;
 /**color*/
 $back-content: #2b4450;
+$back-content-dark: darken($back-content, 10%);
 $back-controller: #678797;
 $shadow: #c4baba;
 $line-event: #473737;
 $li-background: #948a8a;
+$li-background-plus: #f1dfdf;
 $li-background-odd: #796a6a;
 $li-color: #1a2220;
 
@@ -20,6 +24,7 @@ $li-color: #1a2220;
   width: 100%;
   height: $calendar-height;
   justify-content: center;
+  position: relative;
   & .il-calendar--content {
     background: $back-content;
     border-radius: 4px;
@@ -205,11 +210,13 @@ $li-color: #1a2220;
     display: flex;
     & ul.il-timeline--list {
       margin-right: 7px;
-      margin-top: 1.5rem;
+      //margin-top: 1.5rem;
+      //width: 100%;
       & li {
         text-align: center;
         position: relative;
         height: $height-event-item / 2;
+        width: 50px;
         &:after {
           content: '';
           position: absolute;
@@ -225,6 +232,56 @@ $li-color: #1a2220;
         }
         & span {
           font-size: 0.89rem;
+        }
+      }
+    }
+    & ul.il-add--events {
+      margin-right: 7px;
+      width: 100%;
+      & li.il-add {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: $height-event-item;
+        background: $li-background-plus;
+        padding: 0 0.35rem;
+        position: relative;
+        width: 100%;
+        text-align: center;
+        & i {
+          cursor: pointer;
+          width: 50px;
+          &:hover {
+            color: black;
+            opacity: 0.8;
+          }
+        }
+        &:after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 1px;
+          background: $line-event;
+          z-index: 2;
+        }
+        &:last-of-type:after {
+          display: none;
+        }
+        & .il-event--content {
+          position: absolute;
+          width: 1px;
+          height: 100%;
+          left: -100%;
+          background: rgb(112, 92, 92);
+          color: white;
+          transition: 500ms;
+          &.il-event--show {
+            transition: 500ms;
+            width: calc(100% - 50px - 0.7rem);
+            left: calc(50px + 0.7rem);
+          }
         }
       }
     }
@@ -252,8 +309,13 @@ $li-color: #1a2220;
             width: 50%;
             &:nth-child(2) {
               margin-left: 0.25rem;
-              font-size: 1rem;
-              cursor: pointer;
+              & i {
+                font-size: 1rem;
+                cursor: pointer;
+                &:hover {
+                  opacity: 0.7;
+                }
+              }
             }
           }
           &:nth-child(odd) {
@@ -293,6 +355,52 @@ $li-color: #1a2220;
           background: rgb(201, 208, 241);
         }
       }
+    }
+  }
+  & .il-calendar--search {
+    position: absolute;
+    z-index: 2;
+    width: $width-search;
+    top: 0;
+    left: $search-content-width;
+    box-shadow: 3px 0 2px 3px rgba(100, 180, 100, 0.6);
+    padding: 0 0.45rem;
+    background: $back-content-dark;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 60px;
+    & form.il-form--search {
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      font-size: 0.89rem;
+      color: rgb(201, 186, 186);
+      height: $height-event-item;
+      & input[type='search'] {
+        border: none;
+        outline: none;
+        background-color: transparent;
+        padding: 0.35rem 0.15rem;
+        color: $li-background-plus;
+      }
+      & i {
+        color: rgb(131, 119, 119);
+        margin-left: 0.2rem;
+      }
+    }
+    & .il-search--result{
+        color: rgb(201, 186, 186);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        & span{
+            width: 100%;
+        }
+        &.has-result{
+            border-top: 1px solid grey;
+            margin: .45rem 2rem;
+        }
     }
   }
 

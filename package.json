@@ -11,6 +11,7 @@
   "author": "Leandro Bezerra",
   "license": "MIT",
   "devDependencies": {
+    "axios": "^0.18.0",
     "babel-cli": "^6.26.0",
     "babel-loader": "^7.1.5",
     "babel-preset-env": "^1.7.0",

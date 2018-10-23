@@ -95,71 +95,64 @@
                 </div>
                 <div class="il-calendar--controller">
                     <ul class="il-timeline--list"></ul>
-                    <div class="il-calendar--events">
-                        <ul class="il-docas--list">
-                            <li>
-                                <span>doca1</span>
-                                <span id="add-doca1">+</span>
-                            </li>
-                            <li>
-                                <span>doca2</span>
-                                <span id="add-doca2">+</span>
-                            </li>
-                            <li>
-                                <span>doca3</span>
-                                <span id="add-doca3">+</span>
-                            </li>
-                            <li>
-                                <span>doca4</span>
-                                <span id="add-doca4">+</span>
-                            </li>
-                        </ul>
-                        <div class="il-events--group doca1">
-                            <!--<div class="il-doca">
-                                <div class="il-doca--item">
-                                    <span class="il-status">Carregando</span>
+                    <ul class="il-add--events">
+                        <li class="il-add">
+                            <i class="mdi mdi-12px mdi-plus" data-start="7"></i>
+                            <div class="il-event--content">
+                                <div class="il-event--caption">
+                                    nr do protocolo e nome
                                 </div>
-                            </div>-->
-                        </div>
-                        <div class="il-events--group doca2">
-
-                        </div>
-                        <div class="il-events--group doca3">
-
-                        </div>
-                        <div class="il-events--group doca4">
-
-                        </div>
-                        <!--<div class="il-scheduller--form">
-                        <div id="titular-new-reminder">
-                            <h3><i class="mdi mdi-12px mdi-plus"></i> Novo compromisso</h3>
-                        </div>
-                        <br>
-
-                        <div class="il-form--fields">
-                            <input type="text" class="class" placeholder="Aula">
-                            <input type="text" class="il-student" placeholder="Aluno">
-                            <textarea class="form-control" id="todo"></textarea>
-                            <br>
-                            <button type="button" class="il-btn il-btn--success =" id="buttomSave"><i class="mdi mdi-12px mdi-check"></i>
-                                Salvar</button>
-                        </div>
-
-                        <div id="error" class="il-alert il-alert--danger"></div>
-
-                    </div>-->
-                    </div>
+                            </div>
+                        </li>
+                        <li class="il-add">
+                            <i class="mdi mdi-12px mdi-plus" data-start="8"></i>
+                        </li>
+                        <li class="il-add">
+                            <i class="mdi mdi-12px mdi-plus" data-start="9"></i>
+                        </li>
+                        <li class="il-add">
+                            <i class="mdi mdi-12px mdi-plus" data-start="10"></i>
+                        </li>
+                        <li class="il-add">
+                            <i class="mdi mdi-12px mdi-plus" data-start="11"></i>
+                        </li>
+                        <li class="il-add">
+                            <i class="mdi mdi-12px mdi-plus" data-start="12"></i>
+                        </li>
+                        <li class="il-add">
+                            <i class="mdi mdi-12px mdi-plus" data-start="13"></i>
+                        </li>
+                        <li class="il-add">
+                            <i class="mdi mdi-12px mdi-plus" data-start="14"></i>
+                        </li>
+                        <li class="il-add">
+                            <i class="mdi mdi-12px mdi-plus" data-start="15"></i>
+                        </li>
+                        <li class="il-add">
+                            <i class="mdi mdi-12px mdi-plus" data-start="16"></i>
+                        </li>
+                        <li class="il-add>
+                            <i class="mdi mdi-12px mdi-plus" data-start="17"></i>
+                        </li>
+                    </ul>
+                </div>
+                <div class="il-calendar--search">
+                    <form  id="il-client" class="il-form--search">
+                        <input type="search" class="il-input--seach" placeholder="Escolha o cliente">
+                        <i class="mdi mdi-24px mdi-comment-search" id="btn-search"></i>
+                    </form>
+                    <div class="il-search--result"></div>
                 </div>
             </div>
 
-            <!--/* ====== Dias da Semana ====== */-->
+            <!--/* ====== Dias da Semana ====== */--
             <ul class="il-scheduler--week" id="week-list">
 
-            </ul>
-            <!--/* ====== agenda do professor ou professora ====== */-->
+            </ul>-->
+            <!--/* ====== listagem do agendamento ====== */--
             <div class="il-scheduler--teacher-content il-scheduler--table" id="il-scheduler">
                 <table class="il-table il-zebra">
-                    <caption>Statement Summary</caption>
+                    <caption>Listagem do Agendamento</caption>
                     <thead>
                         <tr>
 
@@ -221,10 +214,12 @@
                         </tr>
                     </tbody>
                 </table>
-            </div>
+            </div>-->
         </div>
 
+        <script src="js/commom/axios.js"></script>
         <script src="js/calendar.js"></script>
+        <script src="js/scheduler.js"></script>
         <script src="js/main.js"></script>
         <script>
 
@@ -238,6 +233,7 @@
       jsCalendar.autoFind();
       console.log(ilScheduler.schedulerInit())
     });*/
+
         </script>
 </body>
 
