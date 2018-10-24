@@ -255,6 +255,7 @@ class eventsToDo {
   }
 }
 
+let timeCurrent = null;
 const saveEvent = (index, start) => {
   /*let eventstoDo = new eventsToDo(bank);
   let toDo = eventstoDo.generateEvent(start);
@@ -267,8 +268,32 @@ const saveEvent = (index, start) => {
     toDo.target
   }</span><span>Transporte: ${toDo.transport}</span>`;
   //eventContent.classList.add('il-event--show');*/
+  timeCurrent = start;
   let calendarSearch = document.querySelector('.il-calendar--search');
   calendarSearch.classList.add('il-calendar--search__show');
+};
+
+const setCliente = (e, key) => {
+  //console.log(e,bank[key])
+  e.classList.add('checked');
+  let resultContainer = document.querySelector('.il-search--result');
+  let calendarSearch = document.querySelector('.il-calendar--search');
+  setTimeout(() => {
+    resultContainer.classList.remove('has-result');
+    resultContainer.innerHTML = '';
+    calendarSearch.classList.remove('il-calendar--search__show');
+  }, 500);
+  let eventstoDo = new eventsToDo(bank);
+  let toDo = eventstoDo.generateEvent(timeCurrent);
+
+  let eventContent = document.querySelector('.il-event--content');
+  let eventCaption = document.querySelector(
+    '.il-event--content .il-event--caption'
+  );
+  eventCaption.innerHTML = `<span>Início: ${toDo.start}</span><span>Tarefa: ${
+    toDo.target
+  }</span><span>Transporte: ${toDo.transport}</span>`;
+  eventContent.classList.add('il-event--show');
 };
 
 /**button for navegate calendar */
@@ -284,8 +309,19 @@ btnPrev.addEventListener('click', () => {
   myScheduler(gridDays);
 });
 
-let btnSearch = document.getElementById('btn-search');
 let inputSearch = document.querySelector('.il-input--seach');
+let btnSearch = document.getElementById('btn-search');
+let btnFormClose = document.getElementById('il-form-close');
+
+btnFormClose.addEventListener('click', () => {
+  let resultContainer = document.querySelector('.il-search--result');
+  let calendarSearch = document.querySelector('.il-calendar--search');
+  setTimeout(() => {
+    resultContainer.classList.remove('has-result');
+    resultContainer.innerHTML = '';
+    calendarSearch.classList.remove('il-calendar--search__show');
+  }, 500);
+});
 
 inputSearch.addEventListener('keyup', () => {
   let value = inputSearch.value;
@@ -298,7 +334,11 @@ inputSearch.addEventListener('keyup', () => {
     if (searchs.length > 0) {
       resultContainer.classList.add('has-result');
       searchs.forEach((search, index) => {
-        result += `<span>${search.cod} - ${search.cliente}</span>`;
+        result += `<div class="il-search--result__row"><span>${search.cod} - ${
+          search.cliente
+        }</span><i class="mdi mdi-12px mdi-check il-checkbox" onClick="setCliente(this,${
+          search.key
+        })"></i></div>`;
       });
 
       resultContainer.innerHTML = result;
@@ -311,17 +351,23 @@ inputSearch.addEventListener('keyup', () => {
       }, 4000);
     }
   }
+  if (value == '') {
+    setTimeout(() => {
+      resultContainer.classList.remove('has-result');
+      resultContainer.innerHTML = '';
+    }, 500);
+  }
 });
 
-btnSearch.addEventListener('click', () => {
-  //let value = document.querySelector('.il-input--search').value;
-  //console.log(value);
-  /**
-   * onKeyUp="carregaAjax('ajax_busca', 'js/quick_busca.php?valor=' + this.value)"
-   * onKeyDown="carregaAjax('quick_busca', 'js/quick_busca.php?valor=' + this.value)"
-   * onblur="if(this.value==''){this.value='nome ou c&oacute;digo do produto';}"
-   * onfocus="if(this.value=='nome ou c&oacute;digo do produto') {this.value = '';}" value="nome ou c&oacute;digo do produto" */
-});
+//btnSearch.addEventListener('click', () => {
+//let value = document.querySelector('.il-input--search').value;
+//console.log(value);
+/**
+ * onKeyUp="carregaAjax('ajax_busca', 'js/quick_busca.php?valor=' + this.value)"
+ * onKeyDown="carregaAjax('quick_busca', 'js/quick_busca.php?valor=' + this.value)"
+ * onblur="if(this.value==''){this.value='nome ou c&oacute;digo do produto';}"
+ * onfocus="if(this.value=='nome ou c&oacute;digo do produto') {this.value = '';}" value="nome ou c&oacute;digo do produto" */
+//});
 
 let btnAddEvent = document.querySelectorAll('.il-add--events .il-add i');
 
