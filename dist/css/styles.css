@@ -10162,7 +10162,17 @@ nav.il-nav--main ul.il-nav--list li a.il-nav--link {
   transition: 500ms;
 }
 
+.il-calendar--container .il-calendar--controller ul.il-add--events li.il-add .il-event--content .il-event--caption {
+  text-align: center;
+}
+
+.il-calendar--container .il-calendar--controller ul.il-add--events li.il-add .il-event--content .il-event--caption span {
+  font-weight: .9rem;
+  margin-right: .15rem;
+}
+
 .il-calendar--container .il-calendar--controller ul.il-add--events li.il-add .il-event--content.il-event--show {
+  padding: .3rem;
   -webkit-transition: 500ms;
   transition: 500ms;
   width: calc(100% - 50px - 0.7rem);

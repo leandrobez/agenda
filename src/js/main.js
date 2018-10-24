@@ -22,25 +22,13 @@ let next,
     choices: false
   }),
   (timeCurrent = null),
+  (elTimeCurrent = null),
   (timelineList = document.querySelector('.il-timeline--list')),
+  (timeAddEvents = document.querySelector('.il-add--events')),
   (timeLineConfig = {
     start: 7,
     end: 17
   }),
-  (events = [
-    {
-      start: '07:00',
-      end: '07:30',
-      status: 'carga',
-      type: 'caminhão'
-    },
-    {
-      start: '08:00',
-      end: '08:30',
-      status: 'descarga',
-      type: 'bitrem'
-    }
-  ]),
   (oldItem = ''),
   (inputSearch = document.querySelector('.il-input--seach')),
   (btnSearch = document.getElementById('btn-search')),
@@ -51,10 +39,10 @@ let next,
   (btnDocaAdd4 = document.getElementById('add-doca4')),*/
   (btnNext = document.getElementById('next-month')),
   (btnPrev = document.getElementById('prev-month')),
+  (itemList = null),
   (eventstoDo = null);
 
-
-  /**Class eventsToDo - make events for app */
+/**Class eventsToDo - make events for app */
 class eventsToDo {
   constructor(databank) {
     this.databank = databank;
@@ -107,7 +95,7 @@ class eventsToDo {
 
   generateEvent(start) {
     //console.log(this.databank)
-    let target = 'Carregar';
+    let target = 'Carga';
     let transport = 'Caminhão';
     let tara = '14ton';
     start = prompt('Hora do início', start);
@@ -118,14 +106,14 @@ class eventsToDo {
     transport = prompt('Qual o tipo de transporte?', transport);
     tara = prompt('Qual a tonelagem?', tara);
     return {
-      start: start,
+      start: start + 'hr',
       target: target,
       transport: transport,
       tara: tara
     };
   }
 
-  makeEvent(doca) {
+  /*makeEvent(doca) {
     let oldItem = this.getOldEvent();
     let events = this.events;
     let event = events[events.length - 1];
@@ -152,7 +140,7 @@ class eventsToDo {
         eventGroup4.innerHTML = item;
         break;
     }
-  }
+  }*/
 }
 
 /**import  dataBanc from '../bd/dataBanc.json' */
@@ -180,6 +168,15 @@ const saveLocal = (config, force) => {
   return;
 };
 
+/**show o form search */
+const eventCreate = index => {
+  elTimeCurrent = index;
+  timeCurrent = itemList[index].getAttribute('data-start');
+  let calendarSearch = document.querySelector('.il-calendar--search');
+  calendarSearch.classList.add('il-calendar--search__show');
+  //console.log(itemList[index]);
+};
+
 /**make timelines */
 const makeTimeline = () => {
   let total = timeLineConfig.end - timeLineConfig.start + 1;
@@ -197,6 +194,36 @@ const makeTimeline = () => {
   labelTime += `<li><span>${hour - 1}:30</span></li>`;
   if (labelTime) {
     timelineList.innerHTML = labelTime;
+  }
+};
+
+/**make buttons for timelines */
+const makeButtonsTimeline = () => {
+  let total = timeLineConfig.end - timeLineConfig.start + 1;
+  let labelTime = '';
+  let hour = timeLineConfig.start;
+  let index = 0;
+  for (var i = 1; i < total; i++) {
+    labelTime += `<li class="il-add" data-start="${hour}">
+      <i class="mdi mdi-12px mdi-plus" onClick="eventCreate(${index})"></i>
+      <div class="il-event--content">
+      <div class="il-event--caption">
+      </div>
+      </div>
+      </li>`;
+    hour++;
+    index++;
+  }
+  labelTime += `<li class="il-add" data-start="${hour}">
+      <i class="mdi mdi-12px mdi-plus" onClick="eventCreate(${index})"></i>
+      <div class="il-event--content">
+      <div class="il-event--caption">
+      </div>
+      </div>
+      </li>`;
+  if (labelTime) {
+    timeAddEvents.innerHTML = labelTime;
+    itemList = document.querySelectorAll('.il-add');
   }
 };
 
@@ -248,15 +275,8 @@ const getCurrentTime = () => {
   };
 };
 
-const setEvent = start => {
-  timeCurrent = start;
-  let calendarSearch = document.querySelector('.il-calendar--search');
-  calendarSearch.classList.add('il-calendar--search__show');
-};
-
-const setCliente = (e, key) => {
-  //console.log(e,bank[key])
-  e.classList.add('checked');
+/**remove the search form */
+const removeFormSearch = () => {
   let resultContainer = document.querySelector('.il-search--result');
   let calendarSearch = document.querySelector('.il-calendar--search');
   setTimeout(() => {
@@ -264,31 +284,45 @@ const setCliente = (e, key) => {
     resultContainer.innerHTML = '';
     calendarSearch.classList.remove('il-calendar--search__show');
   }, 500);
-  //let eventstoDo = new eventsToDo(bank);
-  let toDo = eventstoDo.generateEvent(timeCurrent);
-  let eventContent = document.querySelector('.il-event--content');
-  let eventCaption = document.querySelector(
-    '.il-event--content .il-event--caption'
-  );
-  eventCaption.innerHTML = `<span>Início: ${toDo.start}</span><span>Tarefa: ${
-    toDo.target
-  }</span><span>Transporte: ${toDo.transport}</span>`;
-  eventContent.classList.add('il-event--show');
 };
 
-/**button for navegate calendar */
+/**set present client for scheduler */
+const setCliente = (el,key) => {
+  let client = bank[key];
+  el.classList.add('checked');
+  removeFormSearch();
+  let newEvent = '';
+  let toDo = eventstoDo.generateEvent(timeCurrent);
+  let element = itemList[elTimeCurrent];
+  newEvent += `<i class="mdi mdi-12px mdi-plus" onClick="eventCreate(${elTimeCurrent})"></i>
+  <div class="il-event--content il-event--show">
+    <div class="il-event--caption">
+    <span>Cod: ${client.cod}</span>
+    <span>Nome: ${client.cliente}</span>
+    <span>Início: ${toDo.start}</span>
+    <span>Tarefa: ${toDo.target}</span>
+    <span>Transporte: ${toDo.transport}</span>
+    </div>
+  </div>`;
+  element.innerHTML = newEvent;
+  console.log(toDo)
+};
+
+/**navegate to next month */
 btnNext.addEventListener('click', () => {
   next = true;
   prev = false;
   myScheduler(gridDays);
 });
 
+/**navegate to prev month */
 btnPrev.addEventListener('click', () => {
   next = false;
   prev = true;
   myScheduler(gridDays);
 });
 
+/**close form search */
 btnFormClose.addEventListener('click', () => {
   let resultContainer = document.querySelector('.il-search--result');
   let calendarSearch = document.querySelector('.il-calendar--search');
@@ -300,6 +334,7 @@ btnFormClose.addEventListener('click', () => {
   }, 500);
 });
 
+/**require result form search */
 inputSearch.addEventListener('keyup', () => {
   let value = inputSearch.value;
   let resultContainer = document.querySelector('.il-search--result');
@@ -309,12 +344,13 @@ inputSearch.addEventListener('keyup', () => {
     let searchs = eventstoDo.search(value);
     if (searchs.length > 0) {
       resultContainer.classList.add('has-result');
-      searchs.forEach((search) => {
-        result += `<div class="il-search--result__row"><span>${search.cod} - ${
-          search.cliente
-        }</span><i class="mdi mdi-12px mdi-check il-checkbox" onClick="setCliente(this,${
-          search.key
-        })"></i></div>`;
+      searchs.forEach(search => {
+        result += `<div class="il-search--result__row">
+          <span>${search.cod} - ${search.cliente}</span>
+          <i class="mdi mdi-12px mdi-check il-checkbox" onClick="setCliente(this,${
+            search.key
+          })"></i>
+          </div>`;
       });
 
       resultContainer.innerHTML = result;
@@ -336,15 +372,14 @@ inputSearch.addEventListener('keyup', () => {
   }
 });
 
-let btnAddEvent = document.querySelectorAll('.il-add--events .il-add i');
+/*let btnAddEvent = document.querySelectorAll('.il-add--events .il-add i');
 
-btnAddEvent.forEach((e, index) => {
-  let start = e.getAttribute('data-start');
-  //console.log(start);
-  e.addEventListener('click', () => {
+btnAddEvent.forEach(el => {
+  let start = el.getAttribute('data-start');
+  el.addEventListener('click', () => {
     setEvent(start);
   });
-});
+});*/
 
 /**when DOM is ready start app */
 document.addEventListener(
@@ -354,6 +389,7 @@ document.addEventListener(
     prev = false;
     dataBankJSON();
     makeTimeline();
+    makeButtonsTimeline();
     myScheduler(gridDays);
   },
   false
