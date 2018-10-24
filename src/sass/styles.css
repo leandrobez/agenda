@@ -9666,7 +9666,7 @@ button.il-btn {
   font-size: 0.9em;
   word-spacing: 2px;
   font-weight: 700;
-  padding: 0.5em 1.3em;
+  padding: 0.5rem 1.3rem;
   background-color: #9b2649;
   text-transform: uppercase;
   border: 1px solid #f06a6a;
@@ -9714,6 +9714,8 @@ input[type='submit'].il-btn--small,
 a.il-btn.il-btn--small,
 button.il-btn.il-btn--small {
   width: 240px;
+  padding: 0.15rem .7rem;
+  font-size: .89rem;
 }
 
 @media screen and (min-width: 1171px) {
@@ -9722,6 +9724,12 @@ button.il-btn.il-btn--small {
   button.il-btn.il-btn--small {
     width: 280px;
   }
+}
+
+input[type='submit'].il-btn--save,
+a.il-btn.il-btn--save,
+button.il-btn.il-btn--save {
+  background-color: #3d557c;
 }
 
 input[type='submit'].il-btn--small, input[type='submit'].il-btn--header,
@@ -9807,6 +9815,8 @@ nav.il-nav--main ul.il-nav--list li a.il-nav--link {
   text-transform: uppercase;
 }
 
+/** mixin*/
+/**metrics*/
 /**color*/
 .il-calendar--container {
   margin-top: 3rem;
@@ -9838,6 +9848,73 @@ nav.il-nav--main ul.il-nav--list li a.il-nav--link {
           transform-style: preserve-3d;
   -webkit-box-shadow: 5px 0px 7px 3px rgba(190, 186, 186, 0.6);
           box-shadow: 5px 0px 7px 3px rgba(190, 186, 186, 0.6);
+  /*& .il-calendar--back {
+      height: 100%;
+      transform: rotateY(180deg);
+
+      & input {
+        background: none;
+        border: none;
+        border-bottom: 1px solid rgba(73, 114, 133, 0.6);
+        color: #dfebed;
+        font-size: 1.4em;
+        font-weight: 300;
+        padding: 30px 40px;
+        width: 100%;
+      }
+      &--info {
+        color: #dfebed;
+        display: flex;
+        flex-direction: column;
+        font-weight: 600;
+        font-size: 1.2rem;
+        padding: 30px 40px;
+        & div:not(.observations) {
+          margin-bottom: 40px;
+        }
+        & span {
+          font-weight: 300;
+        }
+
+        & .il-date {
+          display: flex;
+          justify-content: space-between;
+          & p {
+            width: 100%;
+          }
+        }
+      }
+      &--actions {
+        bottom: 0;
+        border-top: 1px solid rgba(73, 114, 133, 0.6);
+        display: flex;
+        justify-content: space-between;
+        position: absolute;
+        width: 100%;
+        & button {
+          background: none;
+          border: 0;
+          color: #fff;
+          font-weight: 600;
+          letter-spacing: 3px;
+          margin: 0;
+          padding: 30px 0;
+          text-transform: uppercase;
+          width: 50%;
+          &:first-of-type {
+            border-right: 1px solid rgba(73, 114, 133, 0.6);
+          }
+          &:hover {
+            background: #497285;
+            cursor: pointer;
+          }
+          &:active {
+            background: #5889a0;
+            outline: none;
+          }
+        }
+      }
+    }*/
 }
 
 .il-calendar--container .il-calendar--content .il-calendar--front {
@@ -9970,97 +10047,6 @@ nav.il-nav--main ul.il-nav--list li a.il-nav--link {
   background: orange;
 }
 
-.il-calendar--container .il-calendar--content .il-calendar--back {
-  height: 100%;
-  -webkit-transform: rotateY(180deg);
-          transform: rotateY(180deg);
-}
-
-.il-calendar--container .il-calendar--content .il-calendar--back input {
-  background: none;
-  border: none;
-  border-bottom: 1px solid rgba(73, 114, 133, 0.6);
-  color: #dfebed;
-  font-size: 1.4em;
-  font-weight: 300;
-  padding: 30px 40px;
-  width: 100%;
-}
-
-.il-calendar--container .il-calendar--content .il-calendar--back--info {
-  color: #dfebed;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  font-weight: 600;
-  font-size: 1.2rem;
-  padding: 30px 40px;
-}
-
-.il-calendar--container .il-calendar--content .il-calendar--back--info div:not(.observations) {
-  margin-bottom: 40px;
-}
-
-.il-calendar--container .il-calendar--content .il-calendar--back--info span {
-  font-weight: 300;
-}
-
-.il-calendar--container .il-calendar--content .il-calendar--back--info .il-date {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-}
-
-.il-calendar--container .il-calendar--content .il-calendar--back--info .il-date p {
-  width: 100%;
-}
-
-.il-calendar--container .il-calendar--content .il-calendar--back--actions {
-  bottom: 0;
-  border-top: 1px solid rgba(73, 114, 133, 0.6);
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  position: absolute;
-  width: 100%;
-}
-
-.il-calendar--container .il-calendar--content .il-calendar--back--actions button {
-  background: none;
-  border: 0;
-  color: #fff;
-  font-weight: 600;
-  letter-spacing: 3px;
-  margin: 0;
-  padding: 30px 0;
-  text-transform: uppercase;
-  width: 50%;
-}
-
-.il-calendar--container .il-calendar--content .il-calendar--back--actions button:first-of-type {
-  border-right: 1px solid rgba(73, 114, 133, 0.6);
-}
-
-.il-calendar--container .il-calendar--content .il-calendar--back--actions button:hover {
-  background: #497285;
-  cursor: pointer;
-}
-
-.il-calendar--container .il-calendar--content .il-calendar--back--actions button:active {
-  background: #5889a0;
-  outline: none;
-}
-
 .il-calendar--container .il-calendar--controller {
   width: 100%;
   height: 100%;
@@ -10070,6 +10056,78 @@ nav.il-nav--main ul.il-nav--list li a.il-nav--link {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  position: relative;
+  /*& .il-calendar--events {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: $shadow;
+      border: 1px solid $back-controller;
+      & ul.il-docas--list {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        position: absolute;
+        & li {
+          height: 1.5rem;
+          background: $back-controller;
+          width: 100%;
+          text-align: center;
+          display: flex;
+          & span {
+            color: $shadow;
+            text-align: center;
+            display: block;
+            width: 50%;
+            &:nth-child(2) {
+              margin-left: 0.25rem;
+              & i {
+                font-size: 1rem;
+                cursor: pointer;
+                &:hover {
+                  opacity: 0.7;
+                }
+              }
+            }
+          }
+          &:nth-child(odd) {
+            background: darken($back-controller, 15%);
+          }
+        }
+      }
+      & .il-events--group {
+        width: 25%;
+        display: flex;
+        position: relative;
+        top: 1.5rem;
+        & .il-doca {
+          width: 100%;
+          height: $height-event-item;
+          & .il-doca--item {
+            padding: 0.3rem;
+            height: 100%;
+            text-align: center;
+            & span.il-status {
+              display: block;
+              width: 100%;
+              color: #29310b;
+            }
+          }
+        }
+        &:nth-child(odd) .il-doca .il-doca--item:nth-child(even) {
+          background: darken($back-controller, 15%);
+        }
+        &:nth-child(odd) .il-doca .il-doca--item:nth-child(odd) {
+          background: darken($back-controller, 7%);
+        }
+        &:nth-child(even) .il-doca .il-doca--item:nth-child(odd) {
+          background: rgb(213, 214, 219);
+        }
+        &:nth-child(even) .il-doca .il-doca--item:nth-child(even) {
+          background: rgb(201, 208, 241);
+        }
+      }
+    }*/
 }
 
 .il-calendar--container .il-calendar--controller ul.il-timeline--list {
@@ -10119,20 +10177,22 @@ nav.il-nav--main ul.il-nav--list li a.il-nav--link {
       -ms-flex-pack: center;
           justify-content: center;
   height: 60.4px;
-  background: #f1dfdf;
+  background: #89a6b4;
   padding: 0 0.35rem;
   position: relative;
-  width: 100%;
+  width: 60.4px;
   text-align: center;
 }
 
 .il-calendar--container .il-calendar--controller ul.il-add--events li.il-add i {
   cursor: pointer;
-  width: 50px;
+  outline: 2px solid #c4baba;
+  width: 100%;
 }
 
 .il-calendar--container .il-calendar--controller ul.il-add--events li.il-add i:hover {
-  color: black;
+  background: #796a6a;
+  color: #c4baba;
   opacity: 0.8;
 }
 
@@ -10151,9 +10211,17 @@ nav.il-nav--main ul.il-nav--list li a.il-nav--link {
   display: none;
 }
 
+.il-calendar--container .il-calendar--controller ul.il-add--events li.il-add--expand {
+  width: 100%;
+}
+
+.il-calendar--container .il-calendar--controller ul.il-add--events li.il-add--expand i {
+  max-width: 46.39px;
+}
+
 .il-calendar--container .il-calendar--controller ul.il-add--events li.il-add .il-event--content {
   position: absolute;
-  width: 1px;
+  width: 0;
   height: 100%;
   left: -100%;
   background: #705c5c;
@@ -10179,99 +10247,11 @@ nav.il-nav--main ul.il-nav--list li a.il-nav--link {
   left: calc(50px + 0.7rem);
 }
 
-.il-calendar--container .il-calendar--controller .il-calendar--events {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  background: #c4baba;
-  border: 1px solid #678797;
-}
-
-.il-calendar--container .il-calendar--controller .il-calendar--events ul.il-docas--list {
-  width: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+.il-calendar--container .il-calendar--controller .il-calendar--btn {
   position: absolute;
-}
-
-.il-calendar--container .il-calendar--controller .il-calendar--events ul.il-docas--list li {
-  height: 1.5rem;
-  background: #678797;
   width: 100%;
   text-align: center;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
-
-.il-calendar--container .il-calendar--controller .il-calendar--events ul.il-docas--list li span {
-  color: #c4baba;
-  text-align: center;
-  display: block;
-  width: 50%;
-}
-
-.il-calendar--container .il-calendar--controller .il-calendar--events ul.il-docas--list li span:nth-child(2) {
-  margin-left: 0.25rem;
-}
-
-.il-calendar--container .il-calendar--controller .il-calendar--events ul.il-docas--list li span:nth-child(2) i {
-  font-size: 1rem;
-  cursor: pointer;
-}
-
-.il-calendar--container .il-calendar--controller .il-calendar--events ul.il-docas--list li span:nth-child(2) i:hover {
-  opacity: 0.7;
-}
-
-.il-calendar--container .il-calendar--controller .il-calendar--events ul.il-docas--list li:nth-child(odd) {
-  background: #485e6a;
-}
-
-.il-calendar--container .il-calendar--controller .il-calendar--events .il-events--group {
-  width: 25%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  position: relative;
-  top: 1.5rem;
-}
-
-.il-calendar--container .il-calendar--controller .il-calendar--events .il-events--group .il-doca {
-  width: 100%;
-  height: 60.4px;
-}
-
-.il-calendar--container .il-calendar--controller .il-calendar--events .il-events--group .il-doca .il-doca--item {
-  padding: 0.3rem;
-  height: 100%;
-  text-align: center;
-}
-
-.il-calendar--container .il-calendar--controller .il-calendar--events .il-events--group .il-doca .il-doca--item span.il-status {
-  display: block;
-  width: 100%;
-  color: #29310b;
-}
-
-.il-calendar--container .il-calendar--controller .il-calendar--events .il-events--group:nth-child(odd) .il-doca .il-doca--item:nth-child(even) {
-  background: #485e6a;
-}
-
-.il-calendar--container .il-calendar--controller .il-calendar--events .il-events--group:nth-child(odd) .il-doca .il-doca--item:nth-child(odd) {
-  background: #597482;
-}
-
-.il-calendar--container .il-calendar--controller .il-calendar--events .il-events--group:nth-child(even) .il-doca .il-doca--item:nth-child(odd) {
-  background: #d5d6db;
-}
-
-.il-calendar--container .il-calendar--controller .il-calendar--events .il-events--group:nth-child(even) .il-doca .il-doca--item:nth-child(even) {
-  background: #c9d0f1;
+  bottom: 0;
 }
 
 .il-calendar--container .il-calendar--search {
@@ -10316,7 +10296,7 @@ nav.il-nav--main ul.il-nav--list li a.il-nav--link {
   outline: none;
   background-color: transparent;
   padding: 0.35rem 0.15rem;
-  color: #f1dfdf;
+  color: #89a6b4;
 }
 
 .il-calendar--container .il-calendar--search form.il-form--search i {

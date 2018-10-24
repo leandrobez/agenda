@@ -44,11 +44,53 @@ let next,
 
 /**Class eventsToDo - make events for app */
 class eventsToDo {
+  /*static const agenda = ;*/
+
   constructor(databank) {
     this.databank = databank;
   }
 
   setEvents(events) {
+    this.events = events;
+  }
+
+  setAgenda(agenda) {
+    if (agenda == '') {
+      this.agenda = [
+        {
+          month: '',
+          events: [
+            {
+              day: '',
+              cronogram: [
+                {
+                  start: '',
+                  details: {
+                    cod: '',
+                    client: '',
+                    transport: ''
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ];
+    } else {
+      this.agenda = agenda;
+    }
+  }
+
+  setNew() {
+    let events = this.events;
+    let indice = events.length - 1;
+    events[indice].start = prompt('Previsão de início', events[indice].start);
+    events[indice].end = prompt('Previsão de término', events[indice].end);
+    events[indice].status = prompt('Carga ou descarga', events[indice].status);
+    events[indice].type = prompt(
+      'Camionete, caminhão ...',
+      events[indice].type
+    );
     this.events = events;
   }
 
@@ -64,19 +106,6 @@ class eventsToDo {
       }
     }
     return oldItem;
-  }
-
-  setNew() {
-    let events = this.events;
-    let indice = events.length - 1;
-    events[indice].start = prompt('Previsão de início', events[indice].start);
-    events[indice].end = prompt('Previsão de término', events[indice].end);
-    events[indice].status = prompt('Carga ou descarga', events[indice].status);
-    events[indice].type = prompt(
-      'Camionete, caminhão ...',
-      events[indice].type
-    );
-    this.events = events;
   }
 
   search(value) {
@@ -113,34 +142,34 @@ class eventsToDo {
     };
   }
 
-  /*makeEvent(doca) {
-    let oldItem = this.getOldEvent();
+  makeAgenda() {
+    this.setAgenda('');
+    let config = JSON.parse(window.localStorage.getItem('config'));
     let events = this.events;
-    let event = events[events.length - 1];
-    let eventGroup1 = document.querySelector('.il-events--group.doca1');
-    let eventGroup2 = document.querySelector('.il-events--group.doca2');
-    let eventGroup3 = document.querySelector('.il-events--group.doca3');
-    let eventGroup4 = document.querySelector('.il-events--group.doca4');
-
-    let item = `<div class="il-doca--item">
-          <span class="il-status">${event.status}</span>
-          <span class="il-type">${event.type}</span>
-      </div>`;
-    switch (doca) {
-      case 1:
-        eventGroup1.innerHTML = `<div class="il-doca">${oldItem}${item}</div>`;
-        break;
-      case 2:
-        eventGroup2.innerHTML = item;
-        break;
-      case 3:
-        eventGroup3.innerHTML = item;
-        break;
-      case 4:
-        eventGroup4.innerHTML = item;
-        break;
-    }
-  }*/
+    let newAgenda = [
+      {
+        month: config.todayMonth,
+        events: [
+          {
+            day: config.todayDay,
+            cronogram: [
+              {
+                start: events.start,
+                details: {
+                  cod: events.cod.replace(/\s/g, ""),
+                  client: events.client.replace(/\s/g, ""),
+                  transport: events.transport,
+                  target: events.target,
+                  tara: events.tara
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ];
+    console.log(newAgenda)
+  }
 }
 
 /**import  dataBanc from '../bd/dataBanc.json' */
@@ -287,13 +316,14 @@ const removeFormSearch = () => {
 };
 
 /**set present client for scheduler */
-const setCliente = (el,key) => {
+const setCliente = (el, key) => {
   let client = bank[key];
   el.classList.add('checked');
   removeFormSearch();
   let newEvent = '';
   let toDo = eventstoDo.generateEvent(timeCurrent);
   let element = itemList[elTimeCurrent];
+  element.classList.add('il-add--expand');
   newEvent += `<i class="mdi mdi-12px mdi-plus" onClick="eventCreate(${elTimeCurrent})"></i>
   <div class="il-event--content il-event--show">
     <div class="il-event--caption">
@@ -305,8 +335,16 @@ const setCliente = (el,key) => {
     </div>
   </div>`;
   element.innerHTML = newEvent;
-  console.log(toDo)
+  toDo.cod = client.cod;
+  toDo.client = client.cliente;
+  eventstoDo.setEvents(toDo);
 };
+
+let btnSave = document.getElementById('btn-save');
+
+btnSave.addEventListener('click', () => {
+  eventstoDo.makeAgenda();
+});
 
 /**navegate to next month */
 btnNext.addEventListener('click', () => {
@@ -371,15 +409,6 @@ inputSearch.addEventListener('keyup', () => {
     }, 500);
   }
 });
-
-/*let btnAddEvent = document.querySelectorAll('.il-add--events .il-add i');
-
-btnAddEvent.forEach(el => {
-  let start = el.getAttribute('data-start');
-  el.addEventListener('click', () => {
-    setEvent(start);
-  });
-});*/
 
 /**when DOM is ready start app */
 document.addEventListener(
