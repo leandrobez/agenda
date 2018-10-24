@@ -17,13 +17,11 @@ let next,
     container: document.querySelector('.il-calendar--container'),
     calendar: document.querySelector('.il-calendar--front'),
     divWeeks: document.querySelector('.il-weeks'),
-    days: document.querySelector('.il-weeks .il-week--item span'),
     weekDays: document.querySelector('.il-weeks--days'),
-    form: document.querySelector('.il-back'),
-    input: document.querySelector('.il-calendar--back input'),
-    buttons: document.querySelector('.il-calendar--back button'),
+    days: document.querySelector('.il-weeks .il-week--item span'),
     choices: false
   }),
+  (timeCurrent = null),
   (timelineList = document.querySelector('.il-timeline--list')),
   (timeLineConfig = {
     start: 7,
@@ -40,27 +38,135 @@ let next,
       start: '08:00',
       end: '08:30',
       status: 'descarga',
-      type: 'caminhão'
+      type: 'bitrem'
     }
   ]),
   (oldItem = ''),
-  (btnDocaAdd1 = document.getElementById('add-doca1')),
+  (inputSearch = document.querySelector('.il-input--seach')),
+  (btnSearch = document.getElementById('btn-search')),
+  (btnFormClose = document.getElementById('il-form-close')),
+  /*(btnDocaAdd1 = document.getElementById('add-doca1')),
   (btnDocaAdd2 = document.getElementById('add-doca2')),
   (btnDocaAdd3 = document.getElementById('add-doca3')),
-  (btnDocaAdd4 = document.getElementById('add-doca4')),
+  (btnDocaAdd4 = document.getElementById('add-doca4')),*/
   (btnNext = document.getElementById('next-month')),
-  (btnPrev = document.getElementById('prev-month'));
+  (btnPrev = document.getElementById('prev-month')),
+  (eventstoDo = null);
 
-/**run seconds, minutes, day, month and year in the present day */
-const getCurrentTime = () => {
-  let today = new Date();
-  return {
-    todayDay: today.getDate(),
-    todayMonth: today.getMonth() + 1,
-    todayYear: today.getFullYear(),
-    todayNow: today.getHours(),
-    toadyMin: today.getMinutes()
-  };
+
+  /**Class eventsToDo - make events for app */
+class eventsToDo {
+  constructor(databank) {
+    this.databank = databank;
+  }
+
+  setEvents(events) {
+    this.events = events;
+  }
+
+  getOldEvent() {
+    let events = this.events;
+    let oldItem = '';
+    for (var x = 0; x < events.length; x++) {
+      if (events[x].status) {
+        oldItem = `<div class="il-doca--item">
+              <span class="il-status">${events[x].status}</span>
+              <span class="il-type">${events[x].type}</span></div>`;
+        oldItem += oldItem;
+      }
+    }
+    return oldItem;
+  }
+
+  setNew() {
+    let events = this.events;
+    let indice = events.length - 1;
+    events[indice].start = prompt('Previsão de início', events[indice].start);
+    events[indice].end = prompt('Previsão de término', events[indice].end);
+    events[indice].status = prompt('Carga ou descarga', events[indice].status);
+    events[indice].type = prompt(
+      'Camionete, caminhão ...',
+      events[indice].type
+    );
+    this.events = events;
+  }
+
+  search(value) {
+    let datas = this.databank;
+    let str = null;
+    let result = [];
+    datas.forEach((item, index) => {
+      str = item.cliente.search(value.toUpperCase());
+      if (str == 0) {
+        datas[index].key = index;
+        result.push(datas[index]);
+      }
+    });
+    return result;
+  }
+
+  generateEvent(start) {
+    //console.log(this.databank)
+    let target = 'Carregar';
+    let transport = 'Caminhão';
+    let tara = '14ton';
+    start = prompt('Hora do início', start);
+    target = prompt(
+      'Que tipo da ação será realizada? Carga ou Descarga',
+      target
+    );
+    transport = prompt('Qual o tipo de transporte?', transport);
+    tara = prompt('Qual a tonelagem?', tara);
+    return {
+      start: start,
+      target: target,
+      transport: transport,
+      tara: tara
+    };
+  }
+
+  makeEvent(doca) {
+    let oldItem = this.getOldEvent();
+    let events = this.events;
+    let event = events[events.length - 1];
+    let eventGroup1 = document.querySelector('.il-events--group.doca1');
+    let eventGroup2 = document.querySelector('.il-events--group.doca2');
+    let eventGroup3 = document.querySelector('.il-events--group.doca3');
+    let eventGroup4 = document.querySelector('.il-events--group.doca4');
+
+    let item = `<div class="il-doca--item">
+          <span class="il-status">${event.status}</span>
+          <span class="il-type">${event.type}</span>
+      </div>`;
+    switch (doca) {
+      case 1:
+        eventGroup1.innerHTML = `<div class="il-doca">${oldItem}${item}</div>`;
+        break;
+      case 2:
+        eventGroup2.innerHTML = item;
+        break;
+      case 3:
+        eventGroup3.innerHTML = item;
+        break;
+      case 4:
+        eventGroup4.innerHTML = item;
+        break;
+    }
+  }
+}
+
+/**import  dataBanc from '../bd/dataBanc.json' */
+const dataBankJSON = () => {
+  let url = './bd/databank.json';
+  axios
+    .get(url)
+    .then(response => {
+      bank = response.data;
+      eventstoDo = new eventsToDo(bank);
+    })
+    .catch(err => {
+      console.log(err);
+    });
 };
 
 /**store data to localStorage */
@@ -71,7 +177,6 @@ const saveLocal = (config, force) => {
   } else if (force) {
     window.localStorage.setItem('config', data);
   }
-  //console.log(window.localStorage.getItem('config'))
   return;
 };
 
@@ -83,47 +188,26 @@ const makeTimeline = () => {
   for (var i = 1; i < total * 2; i++) {
     if (i % 2 == 0) {
       hour--;
-      //console.log(i, hour + ':30');
       labelTime += `<li><span>${hour}:30</span></li>`;
     } else {
-      //console.log(i, hour + ':00');
       labelTime += `<li><span>${hour}:00</span></li>`;
     }
     hour++;
   }
-
+  labelTime += `<li><span>${hour - 1}:30</span></li>`;
   if (labelTime) {
     timelineList.innerHTML = labelTime;
   }
 };
 
-/**import  dataBanc from '../bd/dataBanc.json' */
-const dataBankJSON = () => {
-  let url = './bd/databank.json';
-  axios
-    .get(url)
-    .then(response => {
-      bank = response.data;
-    })
-    .catch(err => {
-      console.log(err);
-    });
-};
-
 /**inicialize scheduler */
 const myScheduler = gridDays => {
-  //dá o processo de montagem do calendário atrave´s da clase scheduller
-  //
-
   let newScheduler = new scheduler(gridDays, calendarStructure);
   if (!next && !prev) {
-    /**TODO
-     * 1  verificar o current time
-     * 2 armazenar em local storage
-     */
-    /** clear o mes corrente */
+    /** clear the current month */
     window.localStorage.removeItem('monthCurrent');
     let currentTime = getCurrentTime();
+    /**store in local storage */
     saveLocal(currentTime, false);
     newScheduler.displayCalendar();
   } else {
@@ -152,122 +236,19 @@ const myScheduler = gridDays => {
   }
 };
 
-class eventsToDo {
-  constructor(databank) {
-    this.databank = databank;
-  }
+/**run seconds, minutes, day, month and year in the present day */
+const getCurrentTime = () => {
+  let today = new Date();
+  return {
+    todayDay: today.getDate(),
+    todayMonth: today.getMonth() + 1,
+    todayYear: today.getFullYear(),
+    todayNow: today.getHours(),
+    toadyMin: today.getMinutes()
+  };
+};
 
-  setEvents(events) {
-    this.events = events;
-  }
-
-  getOldEvent() {
-    let events = this.events;
-    let oldItem = '';
-    for (var x = 0; x < events.length; x++) {
-      if (events[x].status) {
-        oldItem = `<div class="il-doca--item">
-            <span class="il-status">${events[x].status}</span>
-            <span class="il-type">${events[x].type}</span></div>`;
-        oldItem += oldItem;
-      }
-    }
-    return oldItem;
-  }
-
-  setNew() {
-    let events = this.events;
-    let indice = events.length - 1;
-    events[indice].start = prompt('Previsão de início', events[indice].start);
-    events[indice].end = prompt('Previsão de término', events[indice].end);
-    events[indice].status = prompt('Carga ou descarga', events[indice].status);
-    events[indice].type = prompt(
-      'Camionete, caminhão ...',
-      events[indice].type
-    );
-    this.events = events;
-  }
-
-  search(value) {
-    let datas = this.databank;
-    let str = null;
-    let result = [];
-    /*const newArray = datas.map((item) => {
-      console.log(item)
-      str = item.cliente.search(value);
-      console.log(str)
-      
-    })*/
-    datas.forEach((item, index) => {
-      str = item.cliente.search(value.toUpperCase());
-      if (str == 0) {
-        datas[index].key = index;
-        result.push(datas[index]);
-      }
-    });
-    return result;
-  }
-
-  generateEvent(start) {
-    //console.log(this.databank)
-    let target = 'Carregar';
-    let transport = 'Caminhão';
-    start = prompt('Hora do início', start);
-    target = prompt(
-      'Que tipo da ação será realizada? Carga ou Descarga',
-      target
-    );
-    transport = prompt('Qual o tipo de transporte?', transport);
-    return {
-      start: start,
-      target: target,
-      transport: transport
-    };
-  }
-
-  makeEvent(doca) {
-    let oldItem = this.getOldEvent();
-    let events = this.events;
-    let event = events[events.length - 1];
-    let eventGroup1 = document.querySelector('.il-events--group.doca1');
-    let eventGroup2 = document.querySelector('.il-events--group.doca2');
-    let eventGroup3 = document.querySelector('.il-events--group.doca3');
-    let eventGroup4 = document.querySelector('.il-events--group.doca4');
-
-    let item = `<div class="il-doca--item">
-        <span class="il-status">${event.status}</span>
-        <span class="il-type">${event.type}</span>
-    </div>`;
-    switch (doca) {
-      case 1:
-        eventGroup1.innerHTML = `<div class="il-doca">${oldItem}${item}</div>`;
-        break;
-      case 2:
-        eventGroup2.innerHTML = item;
-        break;
-      case 3:
-        eventGroup3.innerHTML = item;
-        break;
-      case 4:
-        eventGroup4.innerHTML = item;
-        break;
-    }
-  }
-}
-
-let timeCurrent = null;
-const saveEvent = (index, start) => {
-  /*let eventstoDo = new eventsToDo(bank);
-  let toDo = eventstoDo.generateEvent(start);
-  
-  let eventContent = document.querySelector('.il-event--content');
-  let eventCaption = document.querySelector(
-    '.il-event--content .il-event--caption'
-  );
-  eventCaption.innerHTML = `<span>Início: ${toDo.start}</span><span>Tarefa: ${
-    toDo.target
-  }</span><span>Transporte: ${toDo.transport}</span>`;
-  //eventContent.classList.add('il-event--show');*/
+const setEvent = start => {
   timeCurrent = start;
   let calendarSearch = document.querySelector('.il-calendar--search');
   calendarSearch.classList.add('il-calendar--search__show');
@@ -283,9 +264,8 @@ const setCliente = (e, key) => {
     resultContainer.innerHTML = '';
     calendarSearch.classList.remove('il-calendar--search__show');
   }, 500);
-  let eventstoDo = new eventsToDo(bank);
+  //let eventstoDo = new eventsToDo(bank);
   let toDo = eventstoDo.generateEvent(timeCurrent);
-
   let eventContent = document.querySelector('.il-event--content');
   let eventCaption = document.querySelector(
     '.il-event--content .il-event--caption'
@@ -309,16 +289,13 @@ btnPrev.addEventListener('click', () => {
   myScheduler(gridDays);
 });
 
-let inputSearch = document.querySelector('.il-input--seach');
-let btnSearch = document.getElementById('btn-search');
-let btnFormClose = document.getElementById('il-form-close');
-
 btnFormClose.addEventListener('click', () => {
   let resultContainer = document.querySelector('.il-search--result');
   let calendarSearch = document.querySelector('.il-calendar--search');
   setTimeout(() => {
     resultContainer.classList.remove('has-result');
     resultContainer.innerHTML = '';
+    inputSearch.value = '';
     calendarSearch.classList.remove('il-calendar--search__show');
   }, 500);
 });
@@ -328,12 +305,11 @@ inputSearch.addEventListener('keyup', () => {
   let resultContainer = document.querySelector('.il-search--result');
   let result = '';
   if (value.length > 3) {
-    let eventstoDo = new eventsToDo(bank);
-    //faz a busca
+    /**ready for search */
     let searchs = eventstoDo.search(value);
     if (searchs.length > 0) {
       resultContainer.classList.add('has-result');
-      searchs.forEach((search, index) => {
+      searchs.forEach((search) => {
         result += `<div class="il-search--result__row"><span>${search.cod} - ${
           search.cliente
         }</span><i class="mdi mdi-12px mdi-check il-checkbox" onClick="setCliente(this,${
@@ -347,6 +323,7 @@ inputSearch.addEventListener('keyup', () => {
       resultContainer.innerHTML = result;
       setTimeout(() => {
         resultContainer.classList.remove('has-result');
+        inputSearch.value = '';
         resultContainer.innerHTML = '';
       }, 4000);
     }
@@ -359,23 +336,13 @@ inputSearch.addEventListener('keyup', () => {
   }
 });
 
-//btnSearch.addEventListener('click', () => {
-//let value = document.querySelector('.il-input--search').value;
-//console.log(value);
-/**
- * onKeyUp="carregaAjax('ajax_busca', 'js/quick_busca.php?valor=' + this.value)"
- * onKeyDown="carregaAjax('quick_busca', 'js/quick_busca.php?valor=' + this.value)"
- * onblur="if(this.value==''){this.value='nome ou c&oacute;digo do produto';}"
- * onfocus="if(this.value=='nome ou c&oacute;digo do produto') {this.value = '';}" value="nome ou c&oacute;digo do produto" */
-//});
-
 let btnAddEvent = document.querySelectorAll('.il-add--events .il-add i');
 
 btnAddEvent.forEach((e, index) => {
   let start = e.getAttribute('data-start');
   //console.log(start);
   e.addEventListener('click', () => {
-    saveEvent(index, start);
+    setEvent(start);
   });
 });
 
