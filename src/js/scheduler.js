@@ -23,8 +23,10 @@ class scheduler {
   setLabels() {
     let year = document.querySelector('.il-current--date h1.il-year'),
       today = document.querySelector('.il-current--date h1.il-today'),
-      labelData = document.getElementById('il-data');
+      labelData = document.getElementById('il-data'),
+      labelEventDay = document.getElementById('event-day');
     labelData.innerText = this.getLabelData();
+    labelEventDay.innerText = this.getCurrentEventDay();
     year.innerText = this.currentConfig.todayYear;
     today.innerText =
       this.currentConfig.todayDay +
@@ -55,6 +57,10 @@ class scheduler {
     return label;
   }
 
+  getCurrentEventDay() {
+    let label = this.todayCurrent + '/' + this.monthCurrent;
+    return label;
+  }
   /**retorna a breviatura do mes */
   getMonthKey(m) {
     return this.calendarStructure.monthLabels.short[m - 1];

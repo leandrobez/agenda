@@ -5,12 +5,12 @@
   @return $convert;
 }
 /**metrics*/
-$calendar-height: 700px;
-$calendar-controller-height: 700px;
+$calendar-height: 750px;
+$calendar-controller-height: 710px;
 $calendar-content-width: 420px;
 $li-height: $calendar-controller-height/21;
 $shadow-y: 15px;
-$height-event-item: ($calendar-height/10 - 0.6 * toPx(1));
+$height-event-item: ($calendar-controller-height/10 - 0.6 * toPx(1));
 $search-content-width: 37.2%;
 $width-search: 100% - $search-content-width;
 $width-add-event: $height-event-item;
@@ -31,19 +31,15 @@ $li-background-plus: #89a6b4;
 $li-background-odd: #796a6a;
 $li-color: #1a2220;
 
-
 .il-calendar--container {
-  margin: 3rem auto;
+  top: 2rem;
+  margin-bottom: 1rem;
   align-items: center;
   display: flex;
   width: 100%;
   height: $calendar-height;
-  justify-content: center;
   position: relative;
   @import './partials/calendar-content';
-
   @import './partials/calendar-controller';
-
   @import './partials/calendar-search';
-
 }

@@ -1,90 +1,90 @@
 .il-calendar--content {
-    background: $back-content;
-    border-radius: 4px;
-    height: 100%;
-    width: 100%;
-    max-width: $calendar-content-width;
-    transition: 0.9s;
-    box-shadow: 5px 0px 7px 3px rgba(190, 186, 186, 0.6);
-    & .il-calendar--front {
-      transform: rotateY(0deg);
-      & .il-current--date {
-        border-bottom: 1px solid rgba(73, 114, 133, 0.6);
+  background: $back-content;
+  border-radius: 4px;
+  height: 100%;
+  width: 100%;
+  max-width: $calendar-content-width;
+  transition: 0.9s;
+  box-shadow: 5px 0px 7px 3px rgba(190, 186, 186, 0.6);
+  & .il-calendar--front {
+    
+    & .il-current--date {
+      border-bottom: 1px solid rgba(73, 114, 133, 0.6);
+      display: flex;
+      justify-content: space-between;
+      padding: 30px 40px;
+      & h1 {
+        color: #dfebed;
+        font-size: 1.4em;
+        font-weight: 300;
+      }
+    }
+    & .il-choices--month {
+      display: flex;
+      justify-content: space-between;
+      & i {
+        color: #dfebed;
+        display: block;
+        cursor: pointer;
+        margin: 0 0.5rem;
+      }
+    }
+    & .il-current--month {
+      padding: 30px 40px;
+      & ul.il-weeks--days,
+      & .il-weeks {
+        font-size: 1.3rem;
         display: flex;
         justify-content: space-between;
-        padding: 30px 40px;
-        & h1 {
-          color: #dfebed;
-          font-size: 1.4em;
-          font-weight: 300;
+      }
+      & ul.il-weeks--days {
+        width: 100%;
+        border-bottom: 1px dotted $week-color;
+        & li {
+          font-weight: 600;
+          text-align: center;
+          color: $week-color;
         }
       }
-      & .il-choices--month {
-        display: flex;
-        justify-content: space-between;
-        & i {
-          color: #dfebed;
-          display: block;
-          cursor: pointer;
-          margin: 0 0.5rem;
-        }
-      }
-      & .il-current--month {
-        padding: 30px 40px;
-        & ul.il-weeks--days, 
-        & .il-weeks {
-          font-size: 1.3rem;
-          display: flex;
-          justify-content: space-between;
-        }
-        & ul.il-weeks--days {
-          width: 100%;
-          border-bottom: 1px dotted $week-color;
-          & li {
-            font-weight: 600;
-            text-align: center;
-            color: $week-color;
-          }
-        }
-        & .il-weeks {
-          flex-direction: column;
-          
-          & .il-week--item {
-            display: flex;
-            
-            font-weight: 300;
-            justify-content: space-between;
-            & span {
-              color: #dfebed;
-              line-height: 50px;
-              text-align: center;
-              //width: 50px;
-              height: 50px;
-              &.il-last--month {
-                opacity: 0.3;
-              }
-              &.il-next--month {
-                color: $week-next;
-                opacity: 0.4;
-              }
-              &.active {
-                background: $week-active;
-                border-radius: 50%;
-              }
-              &.il-today {
-                color: $week-today;
-                font-weight: 700;
-                opacity: 0.8;
-              }
-              &:not(.il-today):hover,
-              &:not(.il-last-month):hover,
-              &:not(.il-next-month):hover {
-                cursor: pointer;
-                font-weight: 600;
-                border-radius: 50%;
-              }
+      & .il-weeks {
+        flex-direction: column;
 
-              /*&.il-event {
+        & .il-week--item {
+          display: flex;
+
+          font-weight: 300;
+          justify-content: space-between;
+          & span {
+            color: #dfebed;
+            line-height: 50px;
+            text-align: center;
+            //width: 50px;
+            height: 50px;
+            &.il-last--month {
+              opacity: 0.3;
+            }
+            &.il-next--month {
+              color: $week-next;
+              opacity: 0.4;
+            }
+            &.active {
+              background: $week-active;
+              border-radius: 50%;
+            }
+            &.il-today {
+              color: $week-today;
+              font-weight: 700;
+              opacity: 0.8;
+            }
+            &:not(.il-today):hover,
+            &:not(.il-last-month):hover,
+            &:not(.il-next-month):hover {
+              cursor: pointer;
+              font-weight: 600;
+              border-radius: 50%;
+            }
+
+            /*&.il-event {
                 position: relative;
                 &:after {
                   content: '•';
@@ -96,16 +96,16 @@
                 }
               }*/
 
-              &:hover {
-                color: $week-hover;
-              }
+            &:hover {
+              color: $week-hover;
             }
           }
         }
       }
     }
+  }
 
-   /*& .il-calendar--back {
+  /*& .il-calendar--back {
       height: 100%;
       transform: rotateY(180deg);
 
@@ -172,4 +172,4 @@
         }
       }
     }*/
-  }
+}

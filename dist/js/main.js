@@ -135,11 +135,21 @@ const makeButtonsTimeline = () => {
 const myScheduler = gridDays => {
   let newScheduler = new scheduler(gridDays, calendarStructure);
   if (!next && !prev) {
-    /** clear the current month */
-    window.localStorage.removeItem('monthCurrent');
     let currentTime = getCurrentTime();
-    /**store in local storage */
-    saveLocal(currentTime, false);
+    if (window.localStorage.getItem('config')) {
+      let config = JSON.parse(window.localStorage.getItem('config'));
+      /**check if store today is not igual present day  */
+      if(currentTime.todayDay !== config.todayDay){
+        saveLocal(currentTime, true);
+      }
+    } else {
+      /**store in local storage */
+      saveLocal(currentTime, false);
+    }
+    /** clear the current month when app start*/
+    window.localStorage.removeItem('monthCurrent');
+    /**set the present month */
+    window.localStorage.setItem('monthCurrent', currentTime.todayMonth);
     newScheduler.displayCalendar();
   } else {
     /**button clicked */
