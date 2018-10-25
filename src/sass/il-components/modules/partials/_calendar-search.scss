@@ -1,0 +1,88 @@
+.il-calendar--search {
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: -100%;
+    width: 1px;
+    opacity: 0;
+    padding: 0 0.45rem;
+    background: $back-content-dark;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 60px;
+    transition: 450ms;
+    & form.il-form--search {
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      font-size: 0.89rem;
+      color: rgb(201, 186, 186);
+      height: $height-event-item;
+      & input[type='search'] {
+        border: none;
+        outline: none;
+        background-color: transparent;
+        padding: 0.35rem 0.15rem;
+        color: $li-background-plus;
+      }
+      & i {
+        color: rgb(131, 119, 119);
+        margin: auto 0.2rem;
+        line-height: 40px;
+        cursor: pointer;
+        width: 40px;
+        height: 40px;
+        transition: 450ms;
+        &:hover{
+            transition: 450ms;
+            border: 1px solid $li-background;
+            border-radius: 50%;
+        }
+      }
+    }
+    & .il-search--result{
+        color: rgb(201, 186, 186);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        transition: 450ms;
+        &__row{
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid $back-content;
+            transition: 450ms;
+            & i.il-checkbox{
+                opacity: .8;
+                width: 30px;
+                height: 30px;
+                text-align: center;
+                &.checked{
+                    opacity: 1;
+                    font-weight: bolder;
+                    background: $shadow;
+                    color: rgb(164, 163, 187);
+                }
+            }
+            &:hover{
+              transition: 450ms;
+              cursor: pointer;
+              background: #76768b;
+            }
+        }
+        & span{
+            width: 100%;
+        }
+        &.has-result{
+            transition: 450ms;
+            border-top: 1px solid grey;
+            margin: .45rem 2rem;
+        }
+    }
+    &.il-calendar--search__show{
+        transition: 450ms;
+        width: $width-search;
+        opacity: 1;
+        left: $search-content-width;
+    }
+  }

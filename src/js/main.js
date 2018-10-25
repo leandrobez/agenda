@@ -40,12 +40,11 @@ let next,
   (btnNext = document.getElementById('next-month')),
   (btnPrev = document.getElementById('prev-month')),
   (itemList = null),
-  (eventstoDo = null);
+  (eventstoDo = null),
+  (cronogram = []);
 
 /**Class eventsToDo - make events for app */
 class eventsToDo {
-  /*static const agenda = ;*/
-
   constructor(databank) {
     this.databank = databank;
   }
@@ -55,7 +54,12 @@ class eventsToDo {
   }
 
   setAgenda(agenda) {
-    if (agenda == '') {
+    let tempAgenda = [];
+    if (agenda) {
+      tempAgenda.push(agenda);
+    }
+    this.agenda = tempAgenda;
+    /*if (agenda == '') {
       this.agenda = [
         {
           month: '',
@@ -78,7 +82,7 @@ class eventsToDo {
       ];
     } else {
       this.agenda = agenda;
-    }
+    }*/
   }
 
   setNew() {
@@ -122,53 +126,56 @@ class eventsToDo {
     return result;
   }
 
-  generateEvent(start) {
-    //console.log(this.databank)
+  generateEvent(start, client) {
     let target = 'Carga';
     let transport = 'Caminhão';
     let tara = '14ton';
-    start = prompt('Hora do início', start);
     target = prompt(
       'Que tipo da ação será realizada? Carga ou Descarga',
       target
     );
     transport = prompt('Qual o tipo de transporte?', transport);
     tara = prompt('Qual a tonelagem?', tara);
-    return {
-      start: start + 'hr',
+    let newEvent = {
+      start: start,
       target: target,
       transport: transport,
-      tara: tara
+      tara: tara,
+      cod: client.cod.replace(/\s/g, ''),
+      client: client.cliente.replace(/\s/g, ''),
+      status: 'previsto'
     };
+    //this.setEvents(newEvent);
+    //this.makeAgenda();
+    return newEvent;
   }
 
   makeAgenda() {
-    this.setAgenda('');
+    //this.setAgenda('');
     let config = JSON.parse(window.localStorage.getItem('config'));
     let events = this.events;
-    let newAgenda = [
-      {
-        month: config.todayMonth,
-        events: [
-          {
-            day: config.todayDay,
-            cronogram: [
-              {
-                start: events.start,
-                details: {
-                  cod: events.cod.replace(/\s/g, ""),
-                  client: events.client.replace(/\s/g, ""),
-                  transport: events.transport,
-                  target: events.target,
-                  tara: events.tara
-                }
+    let newAgenda = {
+      month: config.todayMonth,
+      events: [
+        {
+          day: config.todayDay,
+          cronogram: [
+            {
+              start: events.start,
+              details: {
+                cod: events.cod.replace(/\s/g, ''),
+                client: events.client.replace(/\s/g, ''),
+                transport: events.transport,
+                target: events.target,
+                tara: events.tara
               }
-            ]
-          }
-        ]
-      }
-    ];
-    console.log(newAgenda)
+            }
+          ]
+        }
+      ]
+    };
+    this.setAgenda(newAgenda);
+    console.log(this.agenda);
   }
 }
 
@@ -204,6 +211,11 @@ const eventCreate = index => {
   let calendarSearch = document.querySelector('.il-calendar--search');
   calendarSearch.classList.add('il-calendar--search__show');
   //console.log(itemList[index]);
+};
+
+/**remove event created */
+const removeEvent = index => {
+  alert('vou remover');
 };
 
 /**make timelines */
@@ -321,29 +333,57 @@ const setCliente = (el, key) => {
   el.classList.add('checked');
   removeFormSearch();
   let newEvent = '';
-  let toDo = eventstoDo.generateEvent(timeCurrent);
+  let toDo = eventstoDo.generateEvent(timeCurrent, client);
   let element = itemList[elTimeCurrent];
+  let newCronogram = {
+    start: toDo.start,
+    event: {
+      target: toDo.target,
+      transport: toDo.transport,
+      tara: toDo.tara,
+      cod: toDo.cod,
+      client: toDo.client,
+      status: toDo.status
+    }
+  };
+  cronogram.push(newCronogram);
   element.classList.add('il-add--expand');
-  newEvent += `<i class="mdi mdi-12px mdi-plus" onClick="eventCreate(${elTimeCurrent})"></i>
+  newEvent += `<i class="mdi mdi-12px mdi-minus" onClick="eventRemove(${elTimeCurrent})"></i>
   <div class="il-event--content il-event--show">
-    <div class="il-event--caption">
-    <span>Cod: ${client.cod}</span>
-    <span>Nome: ${client.cliente}</span>
-    <span>Início: ${toDo.start}</span>
-    <span>Tarefa: ${toDo.target}</span>
-    <span>Transporte: ${toDo.transport}</span>
-    </div>
+    <table class="il-table">
+      <thead>
+        <tr>
+            <th>Cod</th>
+            <th>Nome</th>
+            <th>Início</th>
+            <th>Tarefa</th>
+            <th>Transporte</th>
+            <th>Ton</th>
+            <th>Status</th>
+            <th>Ação</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>${toDo.cod}</td>
+          <td>${toDo.client}</td>
+          <td>${toDo.start}:00 hr</td>
+          <td>${toDo.target}</td>
+          <td>${toDo.transport}</td>
+          <td>${toDo.tara}</td>
+          <td>${toDo.status}</td>
+          <td><a href="#" class="il-link">editar</a></td>
+        </tr>
+      </tbody>
+    </table>
   </div>`;
   element.innerHTML = newEvent;
-  toDo.cod = client.cod;
-  toDo.client = client.cliente;
-  eventstoDo.setEvents(toDo);
+  console.log(cronogram);
 };
 
 let btnSave = document.getElementById('btn-save');
-
 btnSave.addEventListener('click', () => {
-  eventstoDo.makeAgenda();
+  alert('salvarei a genda no bd ou vou criar um');
 });
 
 /**navegate to next month */

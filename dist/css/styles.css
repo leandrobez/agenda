@@ -9333,79 +9333,6 @@ a.generic-anchor:hover {
   color: #ccc;
 }
 
-/* 
-Generic Styling, for Desktops/Laptops 
-*/
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-/* Zebra striping */
-tr:nth-of-type(odd) {
-  background: #eee;
-}
-
-th {
-  background: #333;
-  color: white;
-  font-weight: bold;
-}
-
-td,
-th {
-  padding: 6px;
-  border: 1px solid #ccc;
-  text-align: left;
-}
-
-@media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
-  /* Force table to not be like tables anymore */
-  table,
-  thead,
-  tbody,
-  th,
-  td,
-  tr {
-    display: block;
-  }
-  /* Hide table headers (but not display: none;, for accessibility) */
-  thead tr {
-    position: absolute;
-    top: -9999px;
-    left: -9999px;
-  }
-  tr {
-    border: 1px solid #ccc;
-  }
-  td {
-    /* Behave  like a "row" */
-    border: none;
-    border-bottom: 1px solid #eee;
-    position: relative;
-    padding-left: 50%;
-  }
-  td:before {
-    /* Now like a table header */
-    position: absolute;
-    /* Top/left values mimic padding */
-    top: 6px;
-    left: 6px;
-    width: 45%;
-    padding-right: 10px;
-    white-space: nowrap;
-  }
-}
-
-.il-scheduler--table {
-  padding: 0 2rem;
-  margin-bottom: 3rem;
-}
-
-.il-scheduler--table .il-section--title {
-  padding-bottom: 3rem;
-}
-
 .il-container {
   display: -ms-grid;
   display: grid;
@@ -9756,6 +9683,74 @@ button.il-btn.il-button--hidden {
   visibility: hidden;
 }
 
+/* 
+Generic Styling, for Desktops/Laptops 
+*/
+table.il-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .85rem;
+  /* Zebra striping */
+}
+
+table.il-table tr:nth-of-type(odd) {
+  background: #eee;
+  text-align: center;
+}
+
+table.il-table th {
+  background: #2b4450;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+}
+
+table.il-table td,
+table.il-table th {
+  padding: 1px 3px;
+  border: 1px solid #ccc;
+}
+
+@media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
+  table.il-table {
+    /* Force table to not be like tables anymore */
+    /* Hide table headers (but not display: none;, for accessibility) */
+  }
+  table.il-table table,
+  table.il-table thead,
+  table.il-table tbody,
+  table.il-table th,
+  table.il-table td,
+  table.il-table tr {
+    display: block;
+  }
+  table.il-table thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+  table.il-table tr {
+    border: 1px solid #ccc;
+  }
+  table.il-table td {
+    /* Behave  like a "row" */
+    border: none;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding-left: 50%;
+  }
+  table.il-table td:before {
+    /* Now like a table header */
+    position: absolute;
+    /* Top/left values mimic padding */
+    top: 6px;
+    left: 6px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+  }
+}
+
 /*Modules */
 nav.il-nav--social {
   height: 2.5rem;
@@ -9819,7 +9814,7 @@ nav.il-nav--main ul.il-nav--list li a.il-nav--link {
 /**metrics*/
 /**color*/
 .il-calendar--container {
-  margin-top: 3rem;
+  margin: 3rem auto;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -10148,7 +10143,7 @@ nav.il-nav--main ul.il-nav--list li a.il-nav--link {
   left: 0;
   width: 100%;
   height: 1px;
-  background: #473737;
+  background: #8698a1;
   z-index: 2;
 }
 
@@ -10203,7 +10198,7 @@ nav.il-nav--main ul.il-nav--list li a.il-nav--link {
   left: 0;
   width: 100%;
   height: 1px;
-  background: #473737;
+  background: #8698a1;
   z-index: 2;
 }
 
@@ -10224,8 +10219,9 @@ nav.il-nav--main ul.il-nav--list li a.il-nav--link {
   width: 0;
   height: 100%;
   left: -100%;
-  background: #705c5c;
-  color: white;
+  border-left: 6px solid #678797;
+  margin-left: -4px;
+  color: #1a2220;
   -webkit-transition: 500ms;
   transition: 500ms;
 }
@@ -10235,12 +10231,11 @@ nav.il-nav--main ul.il-nav--list li a.il-nav--link {
 }
 
 .il-calendar--container .il-calendar--controller ul.il-add--events li.il-add .il-event--content .il-event--caption span {
-  font-weight: .9rem;
-  margin-right: .15rem;
+  font-weight: 0.9rem;
+  margin-right: 0.15rem;
 }
 
 .il-calendar--container .il-calendar--controller ul.il-add--events li.il-add .il-event--content.il-event--show {
-  padding: .3rem;
   -webkit-transition: 500ms;
   transition: 500ms;
   width: calc(100% - 50px - 0.7rem);
@@ -10340,6 +10335,9 @@ nav.il-nav--main ul.il-nav--list li a.il-nav--link {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+  border-bottom: 1px solid #2b4450;
+  -webkit-transition: 450ms;
+  transition: 450ms;
 }
 
 .il-calendar--container .il-calendar--search .il-search--result__row i.il-checkbox {
@@ -10353,7 +10351,14 @@ nav.il-nav--main ul.il-nav--list li a.il-nav--link {
   opacity: 1;
   font-weight: bolder;
   background: #c4baba;
-  color: #1e1bc0;
+  color: #a4a3bb;
+}
+
+.il-calendar--container .il-calendar--search .il-search--result__row:hover {
+  -webkit-transition: 450ms;
+  transition: 450ms;
+  cursor: pointer;
+  background: #76768b;
 }
 
 .il-calendar--container .il-calendar--search .il-search--result span {
@@ -10373,16 +10378,5 @@ nav.il-nav--main ul.il-nav--list li a.il-nav--link {
   width: 62.8%;
   opacity: 1;
   left: 37.2%;
-}
-
-.il-calendar--container .flip {
-  -webkit-transform: rotateY(180deg);
-          transform: rotateY(180deg);
-}
-
-.il-calendar--container .il-calendar--front,
-.il-calendar--container .il-calendar--back {
-  -webkit-backface-visibility: hidden;
-          backface-visibility: hidden;
 }
 /*# sourceMappingURL=styles.css.map */
