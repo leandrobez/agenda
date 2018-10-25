@@ -68,6 +68,47 @@ const saveLocal = (config, force) => {
   return;
 };
 
+/**download agenda  */
+const saveJSON = () => {
+  let data = [
+    {
+      month: '10',
+      events: [{ day: '25', cronogram: cronogram }]
+    }
+  ];
+  let html5il = {};
+  html5il.webdb.db = null;
+
+  html5il.webdb.open = () => {
+    var dbSize = 5 * 1024 * 1024; // 5MB
+    html5il.webdb.db = openDatabase(
+      'Agenda',
+      '1',
+      'Agenda de Carga e Descarga',
+      dbSize
+    );
+  };
+
+  html5il.webdb.onError = (tx, e) => {
+    alert('There has been an error: ' + e.message);
+  };
+
+  html5il.webdb.onSuccess = (tx, r) => {
+    // re-render the data.
+    // loadTodoItems is defined in Step 4a
+    html5il.webdb.getAllTodoItems(loadTodoItems);
+  };
+  /*let dataJSON = JSON.stringify(data);
+  let a = document.createElement('a');
+  let newFile = new Blob([dataJSON], { type: 'JSON' });
+  a.href = URL.createObjectURL(newFile);
+  a.download = 'agenda.json';
+  if (a.click()) {
+    return true;
+  }
+  return false;*/
+};
+
 /**show o form search */
 const eventCreate = index => {
   elTimeCurrent = index;
@@ -139,7 +180,7 @@ const myScheduler = gridDays => {
     if (window.localStorage.getItem('config')) {
       let config = JSON.parse(window.localStorage.getItem('config'));
       /**check if store today is not igual present day  */
-      if(currentTime.todayDay !== config.todayDay){
+      if (currentTime.todayDay !== config.todayDay) {
         saveLocal(currentTime, true);
       }
     } else {
@@ -256,7 +297,20 @@ const setCliente = (el, key) => {
 
 let btnSave = document.getElementById('btn-save');
 btnSave.addEventListener('click', () => {
-  alert('salvarei a genda no bd ou vou criar um');
+  /*let save = saveJSON();
+  if (save) {
+    let alertInfo = document.querySelector('.il-alert.il-alert--info');
+    alertInfo.classList.add('il-alert--show');
+    alertInfo.classList.add('il-alert--posisione');
+  }*/
+  let alertInfo = document.querySelector('.il-alert.il-alert--info');
+  alertInfo.classList.add('il-alert--show');
+  alertInfo.classList.add('il-alert--posisione');
+  setTimeout(() => {
+    alertInfo.classList.remove('il-alert--show');
+    alertInfo.classList.remove('il-alert--posisione');
+  }, 4000);
+  //  alert('salvarei a genda no bd ou vou criar um');
 });
 
 /**navegate to next month */
@@ -296,11 +350,11 @@ inputSearch.addEventListener('keyup', () => {
     if (searchs.length > 0) {
       resultContainer.classList.add('has-result');
       searchs.forEach(search => {
-        result += `<div class="il-search--result__row">
+        result += `<div class="il-search--result__row" onClick="setCliente(this,${
+          search.key
+        })">
           <span>${search.cod} - ${search.cliente}</span>
-          <i class="mdi mdi-12px mdi-check il-checkbox" onClick="setCliente(this,${
-            search.key
-          })"></i>
+          <i class="mdi mdi-12px mdi-check il-checkbox"></i>
           </div>`;
       });
 

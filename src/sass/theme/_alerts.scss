@@ -1,30 +1,40 @@
+$delay : 550ms;
 .il-alert {
-    width: 100%;
-    height: 2.5rem;
-    padding: 0.25rem 0;
-    display: none;
-    transition: 450ms;
-    &--info {
-      background: #128d6c;
-      & p {
-        color: #fecefc;
-        line-height: 2rem;
-        text-align: center;
-        margin: 0;
-      }
-    }
-    &--danger {
-        background: #d84622;
-        & p {
-          color: #fecefc;
-          line-height: 2rem;
-          text-align: center;
-          margin: 0;
-        }
-      }
-    &.il-alert--show {
-      display: block;
-      transition: 450ms;
+  width: 100%;
+  height: 2.5rem;
+  padding: 0.25rem 0;
+  display: none;
+  opacity: 0;
+  transition: $delay;
+  top: -20%;  
+  left: 0;
+  &--info {
+    background: #08664d;
+    & p {
+      color: #4edcf5;
+      line-height: 2rem;
+      text-align: center;
+      margin: 0;
     }
   }
-  
+  &--danger {
+    background: #d84622;
+    & p {
+      color: #fecefc;
+      line-height: 2rem;
+      text-align: center;
+      margin: 0;
+    }
+  }
+  &--show {
+    transition: $delay;
+    display: block;
+    top: 25%;
+  }
+  &--posisione {
+    transition: $delay;
+    position: absolute;
+    z-index: 2;
+    opacity: 0.9;
+  }
+}

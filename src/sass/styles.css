@@ -9544,16 +9544,19 @@ section.il-section.il-section--ficha {
   height: 2.5rem;
   padding: 0.25rem 0;
   display: none;
-  -webkit-transition: 450ms;
-  transition: 450ms;
+  opacity: 0;
+  -webkit-transition: 550ms;
+  transition: 550ms;
+  top: -20%;
+  left: 0;
 }
 
 .il-alert--info {
-  background: #128d6c;
+  background: #08664d;
 }
 
 .il-alert--info p {
-  color: #fecefc;
+  color: #4edcf5;
   line-height: 2rem;
   text-align: center;
   margin: 0;
@@ -9570,10 +9573,19 @@ section.il-section.il-section--ficha {
   margin: 0;
 }
 
-.il-alert.il-alert--show {
+.il-alert--show {
+  -webkit-transition: 550ms;
+  transition: 550ms;
   display: block;
-  -webkit-transition: 450ms;
-  transition: 450ms;
+  top: 25%;
+}
+
+.il-alert--posisione {
+  -webkit-transition: 550ms;
+  transition: 550ms;
+  position: absolute;
+  z-index: 2;
+  opacity: 0.9;
 }
 
 .il-btn--group {
