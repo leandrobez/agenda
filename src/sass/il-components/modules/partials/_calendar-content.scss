@@ -4,9 +4,7 @@
     height: 100%;
     width: 100%;
     max-width: $calendar-content-width;
-    perspective: 1000;
     transition: 0.9s;
-    transform-style: preserve-3d;
     box-shadow: 5px 0px 7px 3px rgba(190, 186, 186, 0.6);
     & .il-calendar--front {
       transform: rotateY(0deg);
@@ -32,48 +30,51 @@
         }
       }
       & .il-current--month {
-        & ul.il-weeks--days {
-          color: #dfebed;
+        padding: 30px 40px;
+        & ul.il-weeks--days, 
+        & .il-weeks {
+          font-size: 1.3rem;
           display: flex;
           justify-content: space-between;
-          font-weight: 600;
-          padding: 30px 40px;
+        }
+        & ul.il-weeks--days {
+          width: 100%;
+          border-bottom: 1px dotted $week-color;
           & li {
+            font-weight: 600;
             text-align: center;
+            color: $week-color;
           }
         }
         & .il-weeks {
-          color: #fff;
-          display: flex;
           flex-direction: column;
-          padding: 0 40px;
+          
           & .il-week--item {
             display: flex;
-            font-size: 1.2rem;
+            
             font-weight: 300;
             justify-content: space-between;
-            width: 100%;
             & span {
+              color: #dfebed;
               line-height: 50px;
               text-align: center;
-              width: 50px;
+              //width: 50px;
               height: 50px;
               &.il-last--month {
                 opacity: 0.3;
               }
               &.il-next--month {
-                color: #ebd9d8;
+                color: $week-next;
                 opacity: 0.4;
               }
               &.active {
-                background: #f78536;
+                background: $week-active;
                 border-radius: 50%;
               }
               &.il-today {
-                color: #0aaf41;
+                color: $week-today;
                 font-weight: 700;
                 opacity: 0.8;
-                border: 1px solid white;
               }
               &:not(.il-today):hover,
               &:not(.il-last-month):hover,
@@ -83,7 +84,7 @@
                 border-radius: 50%;
               }
 
-              &.il-event {
+              /*&.il-event {
                 position: relative;
                 &:after {
                   content: '•';
@@ -93,12 +94,10 @@
                   right: -4px;
                   top: -4px;
                 }
-              }
+              }*/
 
               &:hover {
-                border: 1px solid white;
-
-                background: orange;
+                color: $week-hover;
               }
             }
           }
