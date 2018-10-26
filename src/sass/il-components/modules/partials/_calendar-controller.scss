@@ -4,118 +4,132 @@
   background: $back-controller;
   border-radius: 0 4px 4px 0;
   padding: 0 0 0 0.5rem;
-  & h4{
-      text-align: center;
-      color: $back-content;
-      font-size: 1rem;
-      width: 100%;
-      border-bottom: 1px solid $line-event;
-      margin-bottom: 0.2rem;
+  & h4 {
+    text-align: center;
+    color: $back-content;
+    font-size: 1rem;
+    width: 100%;
+    border-bottom: 1px solid $line-event;
+    margin-bottom: 0.2rem;
   }
   & .il-calendar--controller__content {
     display: flex;
-    position: relative;
-    & ul.il-timeline--list,
-    & ul.il-add--events {
-      margin-right: 7px;
-    }
-    & ul.il-timeline--list {
-      font-weight: 500;
-      & li {
-        text-align: center;
-        position: relative;
-        height: $height-event-item / 2;
-        width: 50px;
-        &:after {
-          content: '';
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          width: 100%;
-          height: 1px;
-          background: $line-event;
-          z-index: 2;
-        }
-        &:last-of-type:after {
-          display: none;
-        }
-        & span {
-          font-size: 0.89rem;
-        }
+    flex-direction: column;
+    & .il-calendar--header{
+      width: 100%;
+      padding-left: $padding-table-event;
+      & table.il-event--head {
+        display: none;
       }
     }
-    & ul.il-add--events {
-      width: 100%;
-      & li.il-add {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        height: $height-event-item;
-        background: $li-background-plus;
-        padding: 0 0.35rem;
-        position: relative;
-        width: $width-add-event;
-        text-align: center;
-        & i {
-          cursor: pointer;
-          outline: 2px solid $shadow;
-          width: 100%;
-          &:hover {
-            background: $li-background-odd;
-            color: $shadow;
-            opacity: 0.8;
+    & .il-calendar--events {
+      display: flex;
+      position: relative;
+      & ul.il-timeline--list,
+      & ul.il-add--events {
+        margin-right: 7px;
+      }
+      & ul.il-timeline--list {
+        font-weight: 500;
+        & li {
+          text-align: center;
+          position: relative;
+          height: $height-event-item / 2;
+          width: $width-time-line;
+          &:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: $line-event;
+            z-index: 2;
           }
+          &:last-of-type:after {
+            display: none;
+          }
+          & span {
+            font-size: 0.89rem;
+          }
+          
         }
-        &:after {
-          content: '';
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          width: 100%;
-          height: 1px;
-          background: $line-event;
-          z-index: 2;
-        }
-        &:last-of-type:after {
-          display: none;
-        }
-        &--expand {
-          width: 100%;
+      }
+      & ul.il-add--events {
+        width: 100%;
+        & li.il-add {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          height: $height-event-item;
+          background: $li-background-plus;
+          padding: 0 0.35rem;
+          position: relative;
+          width: $width-add-event;
+          text-align: center;
           & i {
-            max-width: 46.39px;
-          }
-        }
-        & .il-event--content {
-          position: absolute;
-          width: 0;
-          height: 100%;
-          left: -100%;
-          border-left: 6px solid #678797;
-          margin-left: -4px;
-          color: $li-color;
-          transition: 500ms;
-          & .il-event--caption {
-            text-align: center;
-            & span {
-              font-weight: 0.9rem;
-              margin-right: 0.15rem;
+            cursor: pointer;
+            outline: 2px solid $shadow;
+            width: 100%;
+            &:hover {
+              background: $li-background-odd;
+              color: $shadow;
+              opacity: 0.8;
             }
           }
-          &.il-event--show {
-            //padding: 0.3rem;
+          &:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: $line-event;
+            z-index: 2;
+          }
+          &:last-of-type:after {
+            display: none;
+          }
+          &--expand {
+            width: 100%;
+            & i {
+              max-width: 46.39px;
+            }
+          }
+          & .il-event--content {
+            position: absolute;
+            width: 0;
+            height: 100%;
+            left: -100%;
+            border-left: 6px solid #678797;
+            margin-left: -4px;
+            color: $li-color;
             transition: 500ms;
-            width: calc(100% - 50px - 0.7rem);
-            left: calc(50px + 0.7rem);
+            & .il-event--caption {
+              text-align: center;
+              & span {
+                font-weight: 0.9rem;
+                margin-right: 0.15rem;
+              }
+            }
+            &.il-event--show {
+              transition: 500ms;
+              width: calc(100% - 50px - 0.7rem);
+              left: calc(50px + 0.7rem);
+            }
+            &:nth-of-type(odd) {
+              background: #eee;
+              text-align: center;
+            }
           }
         }
       }
-    }
-    & .il-calendar--btn {
-      position: absolute;
-      width: 100%;
-      text-align: center;
-      bottom: 0;
-      //background: white;
+      /*& .il-calendar--btn {
+        position: absolute;
+        width: 100%;
+        text-align: center;
+        bottom: 0;
+      }*/
     }
   }
 }

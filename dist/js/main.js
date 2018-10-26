@@ -12,7 +12,7 @@
 let next,
   prev = false,
   bank = null;
-(gridDays = getGridDays()),
+(gridDays = null),
   (settings = {
     container: document.querySelector('.il-calendar--container'),
     calendar: document.querySelector('.il-calendar--front'),
@@ -41,7 +41,8 @@ let next,
   (btnPrev = document.getElementById('prev-month')),
   (itemList = null),
   (eventstoDo = null),
-  (cronogram = []);
+  (cronogram = null),
+  (contentCronogram = []);
 
 /**import  dataBanc from '../bd/dataBanc.json' */
 const dataBankJSON = () => {
@@ -172,100 +173,9 @@ const makeButtonsTimeline = () => {
   }
 };
 
-/**inicialize scheduler */
-const myScheduler = gridDays => {
-  let newScheduler = new scheduler(gridDays, calendarStructure);
-  if (!next && !prev) {
-    let currentTime = getCurrentTime();
-    if (window.localStorage.getItem('config')) {
-      let config = JSON.parse(window.localStorage.getItem('config'));
-      /**check if store today is not igual present day  */
-      if (currentTime.todayDay !== config.todayDay) {
-        saveLocal(currentTime, true);
-      }
-    } else {
-      /**store in local storage */
-      saveLocal(currentTime, false);
-    }
-    /** clear the current month when app start*/
-    window.localStorage.removeItem('monthCurrent');
-    /**set the present month */
-    window.localStorage.setItem('monthCurrent', currentTime.todayMonth);
-    newScheduler.displayCalendar();
-  } else {
-    /**button clicked */
-    let nextMonth = null;
-    if (window.localStorage.getItem('monthCurrent')) {
-      nextMonth = JSON.parse(window.localStorage.getItem('monthCurrent'));
-    } else {
-      nextMonth = JSON.parse(window.localStorage.getItem('config'));
-      nextMonth = nextMonth.todayMonth;
-    }
-    if (next) {
-      if (nextMonth < 12) {
-        window.localStorage.setItem('monthCurrent', nextMonth + 1);
-      } else {
-        window.localStorage.setItem('monthCurrent', 1);
-      }
-    } else {
-      if (nextMonth > 1) {
-        window.localStorage.setItem('monthCurrent', nextMonth - 1);
-      } else {
-        window.localStorage.setItem('monthCurrent', 12);
-      }
-    }
-    newScheduler.displayChangeCalendar();
-  }
-};
-
-/**run seconds, minutes, day, month and year in the present day */
-const getCurrentTime = () => {
-  let today = new Date();
-  return {
-    todayDay: today.getDate(),
-    todayMonth: today.getMonth() + 1,
-    todayYear: today.getFullYear(),
-    todayNow: today.getHours(),
-    toadyMin: today.getMinutes()
-  };
-};
-
-/**remove the search form */
-const removeFormSearch = () => {
-  let resultContainer = document.querySelector('.il-search--result');
-  let calendarSearch = document.querySelector('.il-calendar--search');
-  setTimeout(() => {
-    resultContainer.classList.remove('has-result');
-    resultContainer.innerHTML = '';
-    calendarSearch.classList.remove('il-calendar--search__show');
-  }, 500);
-};
-
-/**set present client for scheduler */
-const setCliente = (el, key) => {
-  let client = bank[key];
-  el.classList.add('checked');
-  removeFormSearch();
-  let newEvent = '';
-  let toDo = eventstoDo.generateEvent(timeCurrent, client);
-  let element = itemList[elTimeCurrent];
-  let newCronogram = {
-    start: toDo.start,
-    event: {
-      target: toDo.target,
-      transport: toDo.transport,
-      tara: toDo.tara,
-      cod: toDo.cod,
-      client: toDo.client,
-      status: toDo.status
-    }
-  };
-  cronogram.push(newCronogram);
-  element.classList.add('il-add--expand');
-  newEvent += `<i class="mdi mdi-12px mdi-minus" onClick="eventRemove(${elTimeCurrent})"></i>
-  <div class="il-event--content il-event--show">
-    <table class="il-table">
-      <thead>
+const setTagEvent = (newCronogram, key) => {
+  /**
+   * <thead>
         <tr>
             <th>Cod</th>
             <th>Nome</th>
@@ -277,32 +187,75 @@ const setCliente = (el, key) => {
             <th>Ação</th>
         </tr>
       </thead>
+   */
+  let element = itemList[elTimeCurrent];
+  let newEvent = `<i class="mdi mdi-12px mdi-minus" onClick="eventRemove(${elTimeCurrent})"></i>
+  <div class="il-event--content il-event--show">
+    <table class="il-table">
       <tbody>
         <tr>
-          <td>${toDo.cod}</td>
-          <td>${toDo.client}</td>
-          <td>${toDo.start}:00 hr</td>
-          <td>${toDo.target}</td>
-          <td>${toDo.transport}</td>
-          <td>${toDo.tara}</td>
-          <td>${toDo.status}</td>
-          <td><a href="#" class="il-link">editar</a></td>
+          <td>${newCronogram.details.cod}</td>
+          <td>${newCronogram.details.client}</td>
+          <td>${newCronogram.start}:00 hr</td>
+          <td>${newCronogram.details.target}</td>
+          <td>${newCronogram.details.transport}</td>
+          <td>${newCronogram.details.tara}</td>
+          <td>${newCronogram.details.status}</td>
+          <td><a href="#" onClick="removeEvent(${key})" class="il-link">editar</a></td>
         </tr>
       </tbody>
     </table>
   </div>`;
+  element.classList.add('il-add--expand');
   element.innerHTML = newEvent;
-  console.log(cronogram);
 };
 
-let btnSave = document.getElementById('btn-save');
+/*const setAgenda = () => {
+  let monthCurrent = window.localStorage.getItem('monthCurrent');
+  agenda.push({ month: monthCurrent, content: cronogram[0].content });
+  console.log(agenda);
+};*/
+/**set present client for scheduler */
+const setCronogram = (el, key) => {
+  //el.classList.add('checked');
+  let dayCurrent = window.localStorage.getItem('dayCurrent');
+  let newCronogram = eventstoDo.generateEvent(timeCurrent, key);
+  eventstoDo.removeFormSearch();
+  if (!cronogram) {
+    //cronogram = new Array();
+    cronogram = { day: dayCurrent, events: [newCronogram] };
+    //setAgenda();
+  } else {
+    let events = cronogram.events;
+    //cronogram.forEach(item => {
+    if (cronogram.day === dayCurrent) {
+      events.push(newCronogram);
+    } else {
+      alert('novo dia escolhido na agenda');
+    }
+    // });
+    //setAgenda();
+    console.log(cronogram)
+  }
+  setTagEvent(newCronogram, key);
+  /*let tempContent = [
+    //month: window.localStorage.getItem('monthCurrent'),
+    cronogram.cronogram
+  ]*/
+
+  //contentCronogram.push(tempContent)
+  //contentCronogram = cronogram
+  //console.log(cronogram);
+};
+
+/*let btnSave = document.getElementById('btn-save');
 btnSave.addEventListener('click', () => {
   /*let save = saveJSON();
   if (save) {
     let alertInfo = document.querySelector('.il-alert.il-alert--info');
     alertInfo.classList.add('il-alert--show');
     alertInfo.classList.add('il-alert--posisione');
-  }*/
+  }*
   let alertInfo = document.querySelector('.il-alert.il-alert--info');
   alertInfo.classList.add('il-alert--show');
   alertInfo.classList.add('il-alert--posisione');
@@ -311,7 +264,7 @@ btnSave.addEventListener('click', () => {
     alertInfo.classList.remove('il-alert--posisione');
   }, 4000);
   //  alert('salvarei a genda no bd ou vou criar um');
-});
+});*/
 
 /**navegate to next month */
 btnNext.addEventListener('click', () => {
@@ -343,6 +296,7 @@ btnFormClose.addEventListener('click', () => {
 inputSearch.addEventListener('keyup', () => {
   let value = inputSearch.value;
   let resultContainer = document.querySelector('.il-search--result');
+  let tableHead = document.querySelector('.il-calendar--header');
   let result = '';
   if (value.length > 3) {
     /**ready for search */
@@ -350,17 +304,16 @@ inputSearch.addEventListener('keyup', () => {
     if (searchs.length > 0) {
       resultContainer.classList.add('has-result');
       searchs.forEach(search => {
-        result += `<div class="il-search--result__row" onClick="setCliente(this,${
+        result += `<div class="il-search--result__row" onClick="setCronogram(this,${
           search.key
         })">
           <span>${search.cod} - ${search.cliente}</span>
-          <i class="mdi mdi-12px mdi-check il-checkbox"></i>
           </div>`;
       });
-
+      inputSearch.value = '';
       resultContainer.innerHTML = result;
     } else {
-      result = `<span>Nada encontrado!</span>`;
+      result = `<div class="il-search--result__row"><span class="il-no-result">Nada encontrado!</span></div>`;
       resultContainer.innerHTML = result;
       setTimeout(() => {
         resultContainer.classList.remove('has-result');
@@ -377,10 +330,68 @@ inputSearch.addEventListener('keyup', () => {
   }
 });
 
+/**chech confi situation */
+const checkConfig = () => {
+  let currentTime = getCurrentTime();
+  if (window.localStorage.getItem('config')) {
+    let config = JSON.parse(window.localStorage.getItem('config'));
+    /**check if store today is not igual present day  */
+    if (currentTime.todayDay !== config.todayDay) {
+      saveLocal(currentTime, true);
+    }
+  } else {
+    /**store in local storage */
+    saveLocal(currentTime, false);
+  }
+  /** clear the current month when app start*/
+  window.localStorage.removeItem('monthCurrent');
+  /**set the present month */
+  window.localStorage.setItem('monthCurrent', currentTime.todayMonth);
+};
+
+/**check month current situation */
+const checkMonthCurrent = next => {
+  /**button clicked */
+  let nextMonth = null;
+  if (window.localStorage.getItem('monthCurrent')) {
+    nextMonth = JSON.parse(window.localStorage.getItem('monthCurrent'));
+  } else {
+    nextMonth = JSON.parse(window.localStorage.getItem('config'));
+    nextMonth = nextMonth.todayMonth;
+  }
+  if (next) {
+    if (nextMonth < 12) {
+      window.localStorage.setItem('monthCurrent', nextMonth + 1);
+    } else {
+      window.localStorage.setItem('monthCurrent', 1);
+    }
+  } else {
+    if (nextMonth > 1) {
+      window.localStorage.setItem('monthCurrent', nextMonth - 1);
+    } else {
+      window.localStorage.setItem('monthCurrent', 12);
+    }
+  }
+};
+
+/**inicialize scheduler */
+const myScheduler = gridDays => {
+  setWeekDays(calendarStructure.weekLabels);
+  let newScheduler = new scheduler(gridDays, calendarStructure);
+  if (!next && !prev) {
+    checkConfig();
+    newScheduler.displayCalendar();
+  } else {
+    checkMonthCurrent(next);
+    newScheduler.displayChangeCalendar();
+  }
+};
+
 /**when DOM is ready start app */
 document.addEventListener(
   'DOMContentLoaded',
   () => {
+    gridDays = getGridDays();
     next = false;
     prev = false;
     dataBankJSON();

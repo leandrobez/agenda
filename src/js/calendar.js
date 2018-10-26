@@ -44,7 +44,30 @@ const calendarStructure = {
   }
 };
 
-/*Ferar Array de dias*/
+/**generate days of the week */
+const setWeekDays = week => {
+  let containerDays = document.querySelector('.il-weeks--days');
+  let days = week.short;
+  let labelDays = '';
+  days.forEach(day => {
+    labelDays += `<li>${day}</li>`;
+  });
+  containerDays.innerHTML = labelDays;
+};
+
+/**run seconds, minutes, day, month and year in the present day */
+const getCurrentTime = () => {
+  let today = new Date();
+  return {
+    todayDay: today.getDate(),
+    todayMonth: today.getMonth() + 1,
+    todayYear: today.getFullYear(),
+    todayNow: today.getHours(),
+    toadyMin: today.getMinutes()
+  };
+};
+
+/*generate days grids*/
 const getGridDays = () => {
   let gridDays = [];
   let weekDays = [];

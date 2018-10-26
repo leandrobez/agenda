@@ -9700,6 +9700,7 @@ Generic Styling, for Desktops/Laptops
 */
 table.il-table {
   width: 100%;
+  height: 100%;
   border-collapse: collapse;
   font-size: .85rem;
   /* Zebra striping */
@@ -9711,7 +9712,7 @@ table.il-table tr:nth-of-type(odd) {
 }
 
 table.il-table th {
-  background: #2b4450;
+  background: #366074;
   color: white;
   font-weight: bold;
   text-align: center;
@@ -9720,7 +9721,8 @@ table.il-table th {
 table.il-table td,
 table.il-table th {
   padding: 1px 3px;
-  border: 1px solid #ccc;
+  border: 1px solid #bdbbbb;
+  border-bottom: none;
 }
 
 @media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
@@ -9743,6 +9745,7 @@ table.il-table th {
   }
   table.il-table tr {
     border: 1px solid #ccc;
+    height: 100%;
   }
   table.il-table td {
     /* Behave  like a "row" */
@@ -10063,26 +10066,51 @@ nav.il-nav--main ul.il-nav--list li a.il-nav--link {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  position: relative;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
-.il-calendar--container .il-calendar--controller .il-calendar--controller__content ul.il-timeline--list,
-.il-calendar--container .il-calendar--controller .il-calendar--controller__content ul.il-add--events {
+.il-calendar--container .il-calendar--controller .il-calendar--controller__content .il-calendar--header {
+  width: 100%;
+  padding-left: 118.4px;
+}
+
+.il-calendar--container .il-calendar--controller .il-calendar--controller__content .il-calendar--header table.il-event--head {
+  display: none;
+}
+
+.il-calendar--container .il-calendar--controller .il-calendar--controller__content .il-calendar--events {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: relative;
+  /*& .il-calendar--btn {
+        position: absolute;
+        width: 100%;
+        text-align: center;
+        bottom: 0;
+      }*/
+}
+
+.il-calendar--container .il-calendar--controller .il-calendar--controller__content .il-calendar--events ul.il-timeline--list,
+.il-calendar--container .il-calendar--controller .il-calendar--controller__content .il-calendar--events ul.il-add--events {
   margin-right: 7px;
 }
 
-.il-calendar--container .il-calendar--controller .il-calendar--controller__content ul.il-timeline--list {
+.il-calendar--container .il-calendar--controller .il-calendar--controller__content .il-calendar--events ul.il-timeline--list {
   font-weight: 500;
 }
 
-.il-calendar--container .il-calendar--controller .il-calendar--controller__content ul.il-timeline--list li {
+.il-calendar--container .il-calendar--controller .il-calendar--controller__content .il-calendar--events ul.il-timeline--list li {
   text-align: center;
   position: relative;
   height: 30.7px;
   width: 50px;
 }
 
-.il-calendar--container .il-calendar--controller .il-calendar--controller__content ul.il-timeline--list li:after {
+.il-calendar--container .il-calendar--controller .il-calendar--controller__content .il-calendar--events ul.il-timeline--list li:after {
   content: '';
   position: absolute;
   bottom: 0;
@@ -10093,19 +10121,19 @@ nav.il-nav--main ul.il-nav--list li a.il-nav--link {
   z-index: 2;
 }
 
-.il-calendar--container .il-calendar--controller .il-calendar--controller__content ul.il-timeline--list li:last-of-type:after {
+.il-calendar--container .il-calendar--controller .il-calendar--controller__content .il-calendar--events ul.il-timeline--list li:last-of-type:after {
   display: none;
 }
 
-.il-calendar--container .il-calendar--controller .il-calendar--controller__content ul.il-timeline--list li span {
+.il-calendar--container .il-calendar--controller .il-calendar--controller__content .il-calendar--events ul.il-timeline--list li span {
   font-size: 0.89rem;
 }
 
-.il-calendar--container .il-calendar--controller .il-calendar--controller__content ul.il-add--events {
+.il-calendar--container .il-calendar--controller .il-calendar--controller__content .il-calendar--events ul.il-add--events {
   width: 100%;
 }
 
-.il-calendar--container .il-calendar--controller .il-calendar--controller__content ul.il-add--events li.il-add {
+.il-calendar--container .il-calendar--controller .il-calendar--controller__content .il-calendar--events ul.il-add--events li.il-add {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -10124,19 +10152,19 @@ nav.il-nav--main ul.il-nav--list li a.il-nav--link {
   text-align: center;
 }
 
-.il-calendar--container .il-calendar--controller .il-calendar--controller__content ul.il-add--events li.il-add i {
+.il-calendar--container .il-calendar--controller .il-calendar--controller__content .il-calendar--events ul.il-add--events li.il-add i {
   cursor: pointer;
   outline: 2px solid #c4baba;
   width: 100%;
 }
 
-.il-calendar--container .il-calendar--controller .il-calendar--controller__content ul.il-add--events li.il-add i:hover {
+.il-calendar--container .il-calendar--controller .il-calendar--controller__content .il-calendar--events ul.il-add--events li.il-add i:hover {
   background: #796a6a;
   color: #c4baba;
   opacity: 0.8;
 }
 
-.il-calendar--container .il-calendar--controller .il-calendar--controller__content ul.il-add--events li.il-add:after {
+.il-calendar--container .il-calendar--controller .il-calendar--controller__content .il-calendar--events ul.il-add--events li.il-add:after {
   content: '';
   position: absolute;
   bottom: 0;
@@ -10147,19 +10175,19 @@ nav.il-nav--main ul.il-nav--list li a.il-nav--link {
   z-index: 2;
 }
 
-.il-calendar--container .il-calendar--controller .il-calendar--controller__content ul.il-add--events li.il-add:last-of-type:after {
+.il-calendar--container .il-calendar--controller .il-calendar--controller__content .il-calendar--events ul.il-add--events li.il-add:last-of-type:after {
   display: none;
 }
 
-.il-calendar--container .il-calendar--controller .il-calendar--controller__content ul.il-add--events li.il-add--expand {
+.il-calendar--container .il-calendar--controller .il-calendar--controller__content .il-calendar--events ul.il-add--events li.il-add--expand {
   width: 100%;
 }
 
-.il-calendar--container .il-calendar--controller .il-calendar--controller__content ul.il-add--events li.il-add--expand i {
+.il-calendar--container .il-calendar--controller .il-calendar--controller__content .il-calendar--events ul.il-add--events li.il-add--expand i {
   max-width: 46.39px;
 }
 
-.il-calendar--container .il-calendar--controller .il-calendar--controller__content ul.il-add--events li.il-add .il-event--content {
+.il-calendar--container .il-calendar--controller .il-calendar--controller__content .il-calendar--events ul.il-add--events li.il-add .il-event--content {
   position: absolute;
   width: 0;
   height: 100%;
@@ -10171,31 +10199,29 @@ nav.il-nav--main ul.il-nav--list li a.il-nav--link {
   transition: 500ms;
 }
 
-.il-calendar--container .il-calendar--controller .il-calendar--controller__content ul.il-add--events li.il-add .il-event--content .il-event--caption {
+.il-calendar--container .il-calendar--controller .il-calendar--controller__content .il-calendar--events ul.il-add--events li.il-add .il-event--content .il-event--caption {
   text-align: center;
 }
 
-.il-calendar--container .il-calendar--controller .il-calendar--controller__content ul.il-add--events li.il-add .il-event--content .il-event--caption span {
+.il-calendar--container .il-calendar--controller .il-calendar--controller__content .il-calendar--events ul.il-add--events li.il-add .il-event--content .il-event--caption span {
   font-weight: 0.9rem;
   margin-right: 0.15rem;
 }
 
-.il-calendar--container .il-calendar--controller .il-calendar--controller__content ul.il-add--events li.il-add .il-event--content.il-event--show {
+.il-calendar--container .il-calendar--controller .il-calendar--controller__content .il-calendar--events ul.il-add--events li.il-add .il-event--content.il-event--show {
   -webkit-transition: 500ms;
   transition: 500ms;
   width: calc(100% - 50px - 0.7rem);
   left: calc(50px + 0.7rem);
 }
 
-.il-calendar--container .il-calendar--controller .il-calendar--controller__content .il-calendar--btn {
-  position: absolute;
-  width: 100%;
+.il-calendar--container .il-calendar--controller .il-calendar--controller__content .il-calendar--events ul.il-add--events li.il-add .il-event--content:nth-of-type(odd) {
+  background: #eee;
   text-align: center;
-  bottom: 0;
 }
 
 .il-calendar--container .il-calendar--search {
-  position: absolute;
+  position: fixed;
   z-index: 2;
   top: 0;
   left: -100%;
@@ -10280,23 +10306,9 @@ nav.il-nav--main ul.il-nav--list li a.il-nav--link {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  border-bottom: 1px solid #2b4450;
+  padding: 0.2rem;
   -webkit-transition: 450ms;
   transition: 450ms;
-}
-
-.il-calendar--container .il-calendar--search .il-search--result__row i.il-checkbox {
-  opacity: .8;
-  width: 30px;
-  height: 30px;
-  text-align: center;
-}
-
-.il-calendar--container .il-calendar--search .il-search--result__row i.il-checkbox.checked {
-  opacity: 1;
-  font-weight: bolder;
-  background: #c4baba;
-  color: #a4a3bb;
 }
 
 .il-calendar--container .il-calendar--search .il-search--result__row:hover {
@@ -10306,22 +10318,28 @@ nav.il-nav--main ul.il-nav--list li a.il-nav--link {
   background: #76768b;
 }
 
-.il-calendar--container .il-calendar--search .il-search--result span {
+.il-calendar--container .il-calendar--search .il-search--result__row span {
   width: 100%;
+}
+
+.il-calendar--container .il-calendar--search .il-search--result__row span.il-no-result {
+  text-align: center;
+  color: #dbe0c2;
 }
 
 .il-calendar--container .il-calendar--search .il-search--result.has-result {
   -webkit-transition: 450ms;
   transition: 450ms;
   border-top: 1px solid grey;
-  margin: .45rem 2rem;
+  margin: 0.45rem 2rem;
 }
 
 .il-calendar--container .il-calendar--search.il-calendar--search__show {
   -webkit-transition: 450ms;
   transition: 450ms;
   width: 62.8%;
+  top: 35%;
   opacity: 1;
-  left: 37.2%;
+  left: 18.6%;
 }
 /*# sourceMappingURL=styles.css.map */

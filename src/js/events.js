@@ -81,7 +81,8 @@ class eventsToDo {
     return result;
   }
 
-  generateEvent(start, client) {
+  generateEvent(start, key) {
+    let client = this.databank[key];
     let target = 'Carga';
     let transport = 'Caminhão';
     let tara = '14ton';
@@ -93,16 +94,27 @@ class eventsToDo {
     tara = prompt('Qual a tonelagem?', tara);
     let newEvent = {
       start: start,
-      target: target,
-      transport: transport,
-      tara: tara,
-      cod: client.cod.replace(/\s/g, ''),
-      client: client.cliente.replace(/\s/g, ''),
-      status: 'previsto'
+      details: {
+        target: target,
+        transport: transport,
+        tara: tara,
+        cod: client.cod.replace(/\s/g, ''),
+        client: client.cliente.replace(/\s/g, ''),
+        status: 'previsto'
+      }
     };
-    //this.setEvents(newEvent);
-    //this.makeAgenda();
     return newEvent;
+  }
+
+  /**remove the search form */
+  removeFormSearch() {
+    let resultContainer = document.querySelector('.il-search--result');
+    let calendarSearch = document.querySelector('.il-calendar--search');
+    setTimeout(() => {
+      resultContainer.classList.remove('has-result');
+      resultContainer.innerHTML = '';
+      calendarSearch.classList.remove('il-calendar--search__show');
+    }, 500);
   }
 
   makeAgenda() {
