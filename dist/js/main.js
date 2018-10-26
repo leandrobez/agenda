@@ -191,7 +191,19 @@ const setTagEvent = (newCronogram, key) => {
   let element = itemList[elTimeCurrent];
   let newEvent = `<i class="mdi mdi-12px mdi-minus" onClick="eventRemove(${elTimeCurrent})"></i>
   <div class="il-event--content il-event--show">
-    <table class="il-table">
+    <table class="il-table il-event--head">
+      <thead>
+          <tr>
+              <th>Cod</th>
+              <th>Nome</th>
+              <th>Início</th>
+              <th>Tarefa</th>
+              <th>Transporte</th>
+              <th>Ton</th>
+              <th>Status</th>
+              <th>Ação</th>
+          </tr>
+      </thead>
       <tbody>
         <tr>
           <td>${newCronogram.details.cod}</td>
@@ -227,15 +239,13 @@ const setCronogram = (el, key) => {
     //setAgenda();
   } else {
     let events = cronogram.events;
-    //cronogram.forEach(item => {
     if (cronogram.day === dayCurrent) {
       events.push(newCronogram);
     } else {
       alert('novo dia escolhido na agenda');
     }
-    // });
     //setAgenda();
-    console.log(cronogram)
+    console.log(cronogram);
   }
   setTagEvent(newCronogram, key);
   /*let tempContent = [
@@ -248,8 +258,9 @@ const setCronogram = (el, key) => {
   //console.log(cronogram);
 };
 
-/*let btnSave = document.getElementById('btn-save');
+let btnSave = document.getElementById('btn-save');
 btnSave.addEventListener('click', () => {
+  let decision = confirm('Realmente deseja fechar a genda para esse dia?')
   /*let save = saveJSON();
   if (save) {
     let alertInfo = document.querySelector('.il-alert.il-alert--info');
@@ -263,8 +274,8 @@ btnSave.addEventListener('click', () => {
     alertInfo.classList.remove('il-alert--show');
     alertInfo.classList.remove('il-alert--posisione');
   }, 4000);
-  //  alert('salvarei a genda no bd ou vou criar um');
-});*/
+  //  alert('salvarei a genda no bd ou vou criar um');*/
+});
 
 /**navegate to next month */
 btnNext.addEventListener('click', () => {
@@ -296,7 +307,8 @@ btnFormClose.addEventListener('click', () => {
 inputSearch.addEventListener('keyup', () => {
   let value = inputSearch.value;
   let resultContainer = document.querySelector('.il-search--result');
-  let tableHead = document.querySelector('.il-calendar--header');
+  let btnSave = document.getElementById('btn-save');
+  let btnEndDay = document.querySelector('.il-calendar--btn');
   let result = '';
   if (value.length > 3) {
     /**ready for search */
@@ -312,6 +324,14 @@ inputSearch.addEventListener('keyup', () => {
       });
       inputSearch.value = '';
       resultContainer.innerHTML = result;
+      setTimeout(() => {
+        btnSave.innerHTML =
+          'Fechar o dia ' +
+          window.localStorage.getItem('dayCurrent') +
+          '/' +
+          window.localStorage.getItem('monthCurrent');
+        btnEndDay.classList.add('il-btn--show');
+      }, 2000);
     } else {
       result = `<div class="il-search--result__row"><span class="il-no-result">Nada encontrado!</span></div>`;
       resultContainer.innerHTML = result;
@@ -347,6 +367,8 @@ const checkConfig = () => {
   window.localStorage.removeItem('monthCurrent');
   /**set the present month */
   window.localStorage.setItem('monthCurrent', currentTime.todayMonth);
+  /**set the current day */
+  window.localStorage.setItem('dayCurrent', currentTime.todayDay)
 };
 
 /**check month current situation */
