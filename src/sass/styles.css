@@ -9725,6 +9725,18 @@ table.il-table th {
   border-bottom: none;
 }
 
+table.il-table th.il-td--small {
+  width: 10%;
+}
+
+table.il-table th.il-td--med {
+  width: 12%;
+}
+
+table.il-table th.il-td--big {
+  width: 28%;
+}
+
 @media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
   table.il-table {
     /* Force table to not be like tables anymore */
@@ -10055,7 +10067,7 @@ nav.il-nav--main ul.il-nav--list li a.il-nav--link {
 
 .il-calendar--container .il-calendar--controller h4 {
   text-align: center;
-  color: #2b4450;
+  color: #e1e7e9;
   font-size: 1rem;
   width: 100%;
   border-bottom: 1px solid #8698a1;
@@ -10083,6 +10095,11 @@ nav.il-nav--main ul.il-nav--list li a.il-nav--link {
 .il-calendar--container .il-calendar--controller .il-calendar--controller__content .il-calendar--events ul.il-timeline--list,
 .il-calendar--container .il-calendar--controller .il-calendar--controller__content .il-calendar--events ul.il-add--events {
   margin-right: 7px;
+}
+
+.il-calendar--container .il-calendar--controller .il-calendar--controller__content .il-calendar--events ul.il-timeline--list li,
+.il-calendar--container .il-calendar--controller .il-calendar--controller__content .il-calendar--events ul.il-add--events li {
+  margin: 0.25rem 0;
 }
 
 .il-calendar--container .il-calendar--controller .il-calendar--controller__content .il-calendar--events ul.il-timeline--list {

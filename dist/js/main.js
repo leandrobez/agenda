@@ -119,8 +119,41 @@ const eventCreate = index => {
 };
 
 /**remove event created */
-const removeEvent = index => {
-  alert('vou remover');
+const eventEdit = index => {
+  alert('vou editar esse evento');
+  //let decision = confirm('Realmente deseja fechar os eventos desse dia e salvar na agenda?');
+};
+
+/**remove event created */
+const eventRemove = (index, el) => {
+  let whooErase = el.parentElement;
+  let containerAlert = document.querySelector('.il-alert');
+  let alertInfo = document.querySelector('.il-alert p');
+  let decision = confirm('Realmente deseja remover esse evento?');
+  if (decision) {
+    let newEvents = [];
+    let events = cronogram.events;
+    events.forEach((event, key) => {
+      if (key !== index) {
+        newEvents.push(events[key]);
+      }
+    });
+    cronogram.events = newEvents;
+    whooErase.classList.remove('il-add--expand');
+    whooErase.innerHTML = `<i class="mdi mdi-12px mdi-plus" onClick="eventCreate(${index})" title="Clique para criar um evento nesse horário"></i>
+    <div class="il-event--content">
+    <div class="il-event--caption">
+    </div>
+    </div>`;
+    alertInfo.innerHTML = 'O evento solicitado foi removido da agenda.';
+    containerAlert.classList.add('il-alert--show');
+    containerAlert.classList.add('il-alert--posisione');
+    setTimeout(() => {
+      alertInfo.innerHTML = 'O arquivo foi salvo com sucesso.';
+      containerAlert.classList.remove('il-alert--show');
+      containerAlert.classList.remove('il-alert--posisione');
+    }, 4000);
+  }
 };
 
 /**make timelines */
@@ -151,7 +184,7 @@ const makeButtonsTimeline = () => {
   let index = 0;
   for (var i = 1; i < total; i++) {
     labelTime += `<li class="il-add" data-start="${hour}">
-      <i class="mdi mdi-12px mdi-plus" onClick="eventCreate(${index})"></i>
+      <i class="mdi mdi-12px mdi-plus" onClick="eventCreate(${index})" title="Clique para criar um evento nesse horário"></i>
       <div class="il-event--content">
       <div class="il-event--caption">
       </div>
@@ -161,7 +194,7 @@ const makeButtonsTimeline = () => {
     index++;
   }
   labelTime += `<li class="il-add" data-start="${hour}">
-      <i class="mdi mdi-12px mdi-plus" onClick="eventCreate(${index})"></i>
+      <i class="mdi mdi-12px mdi-plus" onClick="eventCreate(${index})" title="Clique para criar um evento nesse horário"></i>
       <div class="il-event--content">
       <div class="il-event--caption">
       </div>
@@ -174,34 +207,20 @@ const makeButtonsTimeline = () => {
 };
 
 const setTagEvent = (newCronogram, key) => {
-  /**
-   * <thead>
-        <tr>
-            <th>Cod</th>
-            <th>Nome</th>
-            <th>Início</th>
-            <th>Tarefa</th>
-            <th>Transporte</th>
-            <th>Ton</th>
-            <th>Status</th>
-            <th>Ação</th>
-        </tr>
-      </thead>
-   */
   let element = itemList[elTimeCurrent];
-  let newEvent = `<i class="mdi mdi-12px mdi-minus" onClick="eventRemove(${elTimeCurrent})"></i>
+  let newEvent = `<i class="mdi mdi-12px mdi-minus" onClick="eventRemove(${elTimeCurrent},this)" title="Clique para remover esse evento"></i>
   <div class="il-event--content il-event--show">
     <table class="il-table il-event--head">
       <thead>
           <tr>
-              <th>Cod</th>
-              <th>Nome</th>
-              <th>Início</th>
-              <th>Tarefa</th>
-              <th>Transporte</th>
-              <th>Ton</th>
-              <th>Status</th>
-              <th>Ação</th>
+              <th class="il-td--med">Cod</th>
+              <th class="il-td--big">Nome</th>
+              <th class="il-td--small">Início</th>
+              <th class="il-td--small">Tarefa</th>
+              <th class="il-td--small">Transporte</th>
+              <th class="il-td--small">Ton</th>
+              <th class="il-td--small">Status</th>
+              <th class="il-td--small">Ação</th>
           </tr>
       </thead>
       <tbody>
@@ -213,7 +232,7 @@ const setTagEvent = (newCronogram, key) => {
           <td>${newCronogram.details.transport}</td>
           <td>${newCronogram.details.tara}</td>
           <td>${newCronogram.details.status}</td>
-          <td><a href="#" onClick="removeEvent(${key})" class="il-link">editar</a></td>
+          <td><a href="#" onClick="eventEdit(${key})" class="il-link">editar</a></td>
         </tr>
       </tbody>
     </table>
@@ -222,21 +241,14 @@ const setTagEvent = (newCronogram, key) => {
   element.innerHTML = newEvent;
 };
 
-/*const setAgenda = () => {
-  let monthCurrent = window.localStorage.getItem('monthCurrent');
-  agenda.push({ month: monthCurrent, content: cronogram[0].content });
-  console.log(agenda);
-};*/
 /**set present client for scheduler */
-const setCronogram = (el, key) => {
+const setCronogram = key => {
   //el.classList.add('checked');
   let dayCurrent = window.localStorage.getItem('dayCurrent');
   let newCronogram = eventstoDo.generateEvent(timeCurrent, key);
   eventstoDo.removeFormSearch();
   if (!cronogram) {
-    //cronogram = new Array();
     cronogram = { day: dayCurrent, events: [newCronogram] };
-    //setAgenda();
   } else {
     let events = cronogram.events;
     if (cronogram.day === dayCurrent) {
@@ -244,7 +256,6 @@ const setCronogram = (el, key) => {
     } else {
       alert('novo dia escolhido na agenda');
     }
-    //setAgenda();
     console.log(cronogram);
   }
   setTagEvent(newCronogram, key);
@@ -260,21 +271,22 @@ const setCronogram = (el, key) => {
 
 let btnSave = document.getElementById('btn-save');
 btnSave.addEventListener('click', () => {
-  let decision = confirm('Realmente deseja fechar a genda para esse dia?')
-  /*let save = saveJSON();
-  if (save) {
-    let alertInfo = document.querySelector('.il-alert.il-alert--info');
-    alertInfo.classList.add('il-alert--show');
-    alertInfo.classList.add('il-alert--posisione');
-  }*
-  let alertInfo = document.querySelector('.il-alert.il-alert--info');
-  alertInfo.classList.add('il-alert--show');
-  alertInfo.classList.add('il-alert--posisione');
-  setTimeout(() => {
-    alertInfo.classList.remove('il-alert--show');
-    alertInfo.classList.remove('il-alert--posisione');
-  }, 4000);
-  //  alert('salvarei a genda no bd ou vou criar um');*/
+  let containerAlert = document.querySelector('.il-alert');
+  let alertInfo = document.querySelector('.il-alert p');
+  let decision = confirm(
+    'Realmente deseja fechar os eventos desse dia e salvar na agenda?'
+  );
+  if (decision) {
+    alertInfo.innerHTML =
+      'Os eventos do dia 26 de Outubro forma salvos na sua agenda.';
+    containerAlert.classList.add('il-alert--show');
+    containerAlert.classList.add('il-alert--posisione');
+    setTimeout(() => {
+      alertInfo.innerHTML = 'O arquivo foi salvo com sucesso.';
+      containerAlert.classList.remove('il-alert--show');
+      containerAlert.classList.remove('il-alert--posisione');
+    }, 4000);
+  }
 });
 
 /**navegate to next month */
@@ -316,10 +328,10 @@ inputSearch.addEventListener('keyup', () => {
     if (searchs.length > 0) {
       resultContainer.classList.add('has-result');
       searchs.forEach(search => {
-        result += `<div class="il-search--result__row" onClick="setCronogram(this,${
+        result += `<div class="il-search--result__row" onClick="setCronogram(${
           search.key
         })">
-          <span>${search.cod} - ${search.cliente}</span>
+          <span>[${search.cod}] - ${search.cliente}</span>
           </div>`;
       });
       inputSearch.value = '';
@@ -368,7 +380,7 @@ const checkConfig = () => {
   /**set the present month */
   window.localStorage.setItem('monthCurrent', currentTime.todayMonth);
   /**set the current day */
-  window.localStorage.setItem('dayCurrent', currentTime.todayDay)
+  window.localStorage.setItem('dayCurrent', currentTime.todayDay);
 };
 
 /**check month current situation */
