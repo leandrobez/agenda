@@ -33,16 +33,13 @@ let next,
   (inputSearch = document.querySelector('.il-input--seach')),
   (btnSearch = document.getElementById('btn-search')),
   (btnFormClose = document.getElementById('il-form-close')),
-  /*(btnDocaAdd1 = document.getElementById('add-doca1')),
-  (btnDocaAdd2 = document.getElementById('add-doca2')),
-  (btnDocaAdd3 = document.getElementById('add-doca3')),
-  (btnDocaAdd4 = document.getElementById('add-doca4')),*/
   (btnNext = document.getElementById('next-month')),
   (btnPrev = document.getElementById('prev-month')),
+  (btnSave = document.getElementById('btn-save')),
   (itemList = null),
   (eventstoDo = null),
   (cronogram = null),
-  (contentCronogram = []);
+  (agenda = []);
 
 /**import  dataBanc from '../bd/dataBanc.json' */
 const dataBankJSON = () => {
@@ -58,8 +55,39 @@ const dataBankJSON = () => {
     });
 };
 
+/**uma coleção de eventos está sendo salva */
+const saveAgenda = () => {
+  let containerAlert = document.querySelector('.il-alert');
+  let alertInfo = document.querySelector('.il-alert p');
+  let currentCronogram = cronogram;
+  let newAgendaMonth = {
+    month: window.localStorage.getItem('monthCurrent'),
+    cronogram: null
+  };
+  newAgendaMonth.cronogram = new Array();
+  newAgendaMonth.cronogram.push(currentCronogram);
+  agenda.push(newAgendaMonth);
+  let data = JSON.stringify(agenda);
+  if (!window.localStorage.getItem('agenda')) {
+    window.localStorage.setItem('agenda', data);
+  } else {
+    alert('jácriada a agenda');
+  }
+  alertInfo.innerHTML =
+    'Os eventos do dia ' +
+    window.localStorage.getItem('dayCurrent') +
+    ' foram salvos na sua agenda.';
+  containerAlert.classList.add('il-alert--show');
+  containerAlert.classList.add('il-alert--posisione');
+  setTimeout(() => {
+    alertInfo.innerHTML = 'O arquivo foi salvo com sucesso.';
+    containerAlert.classList.remove('il-alert--show');
+    containerAlert.classList.remove('il-alert--posisione');
+  }, 4000);
+};
+
 /**store data to localStorage */
-const saveLocal = (config, force) => {
+const saveConfig = (config, force) => {
   let data = JSON.stringify(config);
   if (!window.localStorage.getItem('config')) {
     window.localStorage.setItem('config', data);
@@ -69,7 +97,7 @@ const saveLocal = (config, force) => {
   return;
 };
 
-/**download agenda  */
+/**download agenda  *
 const saveJSON = () => {
   let data = [
     {
@@ -107,54 +135,8 @@ const saveJSON = () => {
   if (a.click()) {
     return true;
   }
-  return false;*/
-};
-
-/**show o form search */
-const eventCreate = index => {
-  elTimeCurrent = index;
-  timeCurrent = itemList[index].getAttribute('data-start');
-  let calendarSearch = document.querySelector('.il-calendar--search');
-  calendarSearch.classList.add('il-calendar--search__show');
-};
-
-/**remove event created */
-const eventEdit = index => {
-  alert('vou editar esse evento');
-  //let decision = confirm('Realmente deseja fechar os eventos desse dia e salvar na agenda?');
-};
-
-/**remove event created */
-const eventRemove = (index, el) => {
-  let whooErase = el.parentElement;
-  let containerAlert = document.querySelector('.il-alert');
-  let alertInfo = document.querySelector('.il-alert p');
-  let decision = confirm('Realmente deseja remover esse evento?');
-  if (decision) {
-    let newEvents = [];
-    let events = cronogram.events;
-    events.forEach((event, key) => {
-      if (key !== index) {
-        newEvents.push(events[key]);
-      }
-    });
-    cronogram.events = newEvents;
-    whooErase.classList.remove('il-add--expand');
-    whooErase.innerHTML = `<i class="mdi mdi-12px mdi-plus" onClick="eventCreate(${index})" title="Clique para criar um evento nesse horário"></i>
-    <div class="il-event--content">
-    <div class="il-event--caption">
-    </div>
-    </div>`;
-    alertInfo.innerHTML = 'O evento solicitado foi removido da agenda.';
-    containerAlert.classList.add('il-alert--show');
-    containerAlert.classList.add('il-alert--posisione');
-    setTimeout(() => {
-      alertInfo.innerHTML = 'O arquivo foi salvo com sucesso.';
-      containerAlert.classList.remove('il-alert--show');
-      containerAlert.classList.remove('il-alert--posisione');
-    }, 4000);
-  }
-};
+  return false;*
+};*/
 
 /**make timelines */
 const makeTimeline = () => {
@@ -208,7 +190,8 @@ const makeButtonsTimeline = () => {
 
 const setTagEvent = (newCronogram, key) => {
   let element = itemList[elTimeCurrent];
-  let newEvent = `<i class="mdi mdi-12px mdi-minus" onClick="eventRemove(${elTimeCurrent},this)" title="Clique para remover esse evento"></i>
+  let arrayPosition = cronogram.events.length - 1;
+  let newEvent = `<i class="mdi mdi-12px mdi-minus" onClick="eventRemove(${elTimeCurrent},this,false)" title="Clique para remover esse evento"></i>
   <div class="il-event--content il-event--show">
     <table class="il-table il-event--head">
       <thead>
@@ -232,7 +215,7 @@ const setTagEvent = (newCronogram, key) => {
           <td>${newCronogram.details.transport}</td>
           <td>${newCronogram.details.tara}</td>
           <td>${newCronogram.details.status}</td>
-          <td><a href="#" onClick="eventEdit(${key})" class="il-link">editar</a></td>
+          <td><a href="#" onClick="eventEdit(${key},${arrayPosition})" class="il-link">editar</a></td>
         </tr>
       </tbody>
     </table>
@@ -243,7 +226,6 @@ const setTagEvent = (newCronogram, key) => {
 
 /**set present client for scheduler */
 const setCronogram = key => {
-  //el.classList.add('checked');
   let dayCurrent = window.localStorage.getItem('dayCurrent');
   let newCronogram = eventstoDo.generateEvent(timeCurrent, key);
   eventstoDo.removeFormSearch();
@@ -256,29 +238,53 @@ const setCronogram = key => {
     } else {
       alert('novo dia escolhido na agenda');
     }
-    console.log(cronogram);
   }
-  setTagEvent(newCronogram, key);
-  /*let tempContent = [
-    //month: window.localStorage.getItem('monthCurrent'),
-    cronogram.cronogram
-  ]*/
-
-  //contentCronogram.push(tempContent)
-  //contentCronogram = cronogram
   //console.log(cronogram);
+  setTagEvent(newCronogram, key);
 };
 
-let btnSave = document.getElementById('btn-save');
-btnSave.addEventListener('click', () => {
+/**show o form search */
+const eventCreate = index => {
+  elTimeCurrent = index;
+  timeCurrent = itemList[index].getAttribute('data-start');
+  let calendarSearch = document.querySelector('.il-calendar--search');
+  calendarSearch.classList.add('il-calendar--search__show');
+};
+
+/**Crud dos eventos */
+/**event edit -- talvez seja melhor colocar na classe event */
+const eventEdit = (index, el) => {
+  alert('Eu vou editar o evento ' + index);
+};
+
+/**remove event created */
+const eventRemove = (index, el, force) => {
+  let whooErase = el.parentElement;
   let containerAlert = document.querySelector('.il-alert');
   let alertInfo = document.querySelector('.il-alert p');
-  let decision = confirm(
-    'Realmente deseja fechar os eventos desse dia e salvar na agenda?'
-  );
-  if (decision) {
-    alertInfo.innerHTML =
-      'Os eventos do dia 26 de Outubro forma salvos na sua agenda.';
+  let decision = null;
+  //console.log('belez',whooErase)
+  if (force) {
+    decision = true;
+  } else {
+    decision = confirm('Realmente deseja remover esse evento?');
+  }
+  if (decision && cronogram) {
+    let newEvents = [];
+    let events = cronogram.events;
+    events.forEach((event, key) => {
+      if (key !== index) {
+        newEvents.push(events[key]);
+      }
+    });
+    cronogram.events = newEvents;
+    whooErase.classList.remove('il-add--expand');
+    whooErase.innerHTML = `<i class="mdi mdi-12px mdi-plus" onClick="eventCreate(${index})" title="Clique para criar um evento nesse horário"></i>
+    <div class="il-event--content">
+    <div class="il-event--caption">
+    </div>
+    </div>`;
+    alertInfo.innerHTML = 'O evento solicitado foi removido da agenda.';
     containerAlert.classList.add('il-alert--show');
     containerAlert.classList.add('il-alert--posisione');
     setTimeout(() => {
@@ -287,6 +293,13 @@ btnSave.addEventListener('click', () => {
       containerAlert.classList.remove('il-alert--posisione');
     }, 4000);
   }
+};
+
+/**btn for save agenda */
+btnSave.addEventListener('click', () => {
+  confirm('Realmente deseja fechar os eventos desse dia e salvar na agenda?')
+    ? saveAgenda()
+    : '';
 });
 
 /**navegate to next month */
@@ -369,11 +382,11 @@ const checkConfig = () => {
     let config = JSON.parse(window.localStorage.getItem('config'));
     /**check if store today is not igual present day  */
     if (currentTime.todayDay !== config.todayDay) {
-      saveLocal(currentTime, true);
+      saveConfig(currentTime, true);
     }
   } else {
     /**store in local storage */
-    saveLocal(currentTime, false);
+    saveConfig(currentTime, false);
   }
   /** clear the current month when app start*/
   window.localStorage.removeItem('monthCurrent');
@@ -408,8 +421,75 @@ const checkMonthCurrent = next => {
   }
 };
 
+/**check current agenda */
+const chekCurrentAgenda = () => {
+  let currentAgenda = window.localStorage.getItem('agenda');
+  if (currentAgenda) {
+    agenda = JSON.parse(currentAgenda);
+  }
+};
+
+/**sincronize agenda to current day */
+const sincronizeEvents = () => {
+  let currentDay = window.localStorage.getItem('dayCurrent');
+  agenda.forEach((program, index) => {
+    if (program.month == window.localStorage.getItem('monthCurrent')) {
+      program.cronogram.forEach((event, key) => {
+        if (event.day == currentDay) {
+          let nrEvents = event.events.length;
+          for (let i = 0; i < nrEvents; i++) {
+            elTimeCurrent = i;
+            itemList[i] = event.events[i].start;
+            cronogram = program.cronogram[key];
+            setTagEvent(event.events[i], i);
+          }
+        } else {
+          cronogram = null;
+          let allEvents = document.querySelectorAll('li.il-add--expand');
+          allEvents.forEach((e, i) => {
+            e.classList.remove('il-add--expand');
+            e.innerHTML = `<i class="mdi mdi-12px mdi-plus" onClick="eventCreate(${index})" title="Clique para criar um evento nesse horário"></i>
+            <div class="il-event--content">
+            <div class="il-event--caption">
+            </div>
+            </div>`;
+          });
+        }
+      });
+    }
+  });
+  //console.log(cronogram)
+};
+
+/**altera o dia corrente */
+const changeDay = (day,el) => {
+  //el.classList.add('il-day--active')
+  let dayCurrent = window.localStorage.getItem('dayCurrent');
+  let monthCurrent = window.localStorage.getItem('monthCurrent');
+  if (day != dayCurrent) {
+    let newScheduler = new scheduler(gridDays, calendarStructure);
+    let currentConfig = JSON.parse(window.localStorage.getItem('config'));
+    currentConfig.todayDay = day;
+    /**store in local storage */
+    saveConfig(currentConfig, true);
+    window.localStorage.setItem('dayCurrent', day);
+    newScheduler.setCurrentConfig(currentConfig);
+    newScheduler.setTodayCurrent(day);
+    newScheduler.setMonthCurrent(monthCurrent);
+    newScheduler.setLabels();
+    chekCurrentAgenda();
+    if (agenda.length > 0) {
+      sincronizeEvents();
+    }
+  }
+};
+
 /**inicialize scheduler */
 const myScheduler = gridDays => {
+  if (agenda.length > 0) {
+    sincronizeEvents();
+  }
+
   setWeekDays(calendarStructure.weekLabels);
   let newScheduler = new scheduler(gridDays, calendarStructure);
   if (!next && !prev) {
@@ -431,6 +511,7 @@ document.addEventListener(
     dataBankJSON();
     makeTimeline();
     makeButtonsTimeline();
+    chekCurrentAgenda();
     myScheduler(gridDays);
   },
   false

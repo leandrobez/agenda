@@ -9704,6 +9704,49 @@ table.il-table {
   border-collapse: collapse;
   font-size: .85rem;
   /* Zebra striping */
+  /*@media only screen and (max-width: 760px),
+    (min-device-width: 768px) and (max-device-width: 1024px) {
+    /* Force table to not be like tables anymore *
+    table,
+    thead,
+    tbody,
+    th,
+    td,
+    tr {
+      display: block;
+    }
+
+    /* Hide table headers (but not display: none;, for accessibility) *
+    thead tr {
+      position: absolute;
+      top: -9999px;
+      left: -9999px;
+    }
+
+    tr {
+      border: 1px solid #ccc;
+      height: 100%;
+    }
+
+    td {
+      /* Behave  like a "row" *
+      border: none;
+      border-bottom: 1px solid #eee;
+      position: relative;
+      padding-left: 50%;
+    }
+
+    td:before {
+      /* Now like a table header *
+      position: absolute;
+      /* Top/left values mimic padding *
+      top: 6px;
+      left: 6px;
+      width: 45%;
+      padding-right: 10px;
+      white-space: nowrap;
+    }
+  }*/
 }
 
 table.il-table tr:nth-of-type(odd) {
@@ -9735,47 +9778,6 @@ table.il-table th.il-td--med {
 
 table.il-table th.il-td--big {
   width: 28%;
-}
-
-@media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
-  table.il-table {
-    /* Force table to not be like tables anymore */
-    /* Hide table headers (but not display: none;, for accessibility) */
-  }
-  table.il-table table,
-  table.il-table thead,
-  table.il-table tbody,
-  table.il-table th,
-  table.il-table td,
-  table.il-table tr {
-    display: block;
-  }
-  table.il-table thead tr {
-    position: absolute;
-    top: -9999px;
-    left: -9999px;
-  }
-  table.il-table tr {
-    border: 1px solid #ccc;
-    height: 100%;
-  }
-  table.il-table td {
-    /* Behave  like a "row" */
-    border: none;
-    border-bottom: 1px solid #eee;
-    position: relative;
-    padding-left: 50%;
-  }
-  table.il-table td:before {
-    /* Now like a table header */
-    position: absolute;
-    /* Top/left values mimic padding */
-    top: 6px;
-    left: 6px;
-    width: 45%;
-    padding-right: 10px;
-    white-space: nowrap;
-  }
 }
 
 /*Modules */
@@ -9841,7 +9843,7 @@ nav.il-nav--main ul.il-nav--list li a.il-nav--link {
 /**metrics*/
 /**color*/
 .il-calendar--container {
-  top: 2rem;
+  top: 1.5rem;
   margin-bottom: 1rem;
   -webkit-box-align: center;
       -ms-flex-align: center;
@@ -9850,7 +9852,7 @@ nav.il-nav--main ul.il-nav--list li a.il-nav--link {
   display: -ms-flexbox;
   display: flex;
   width: 100%;
-  height: 750px;
+  height: 720px;
   position: relative;
 }
 
@@ -10032,13 +10034,13 @@ nav.il-nav--main ul.il-nav--list li a.il-nav--link {
 }
 
 .il-calendar--container .il-calendar--content .il-calendar--front .il-current--month .il-weeks .il-week--item span.il-next--month {
-  color: #4b4646;
-  opacity: 0.4;
+  color: #646880;
+  opacity: 0.7;
 }
 
-.il-calendar--container .il-calendar--content .il-calendar--front .il-current--month .il-weeks .il-week--item span.active {
+.il-calendar--container .il-calendar--content .il-calendar--front .il-current--month .il-weeks .il-week--item span.il-day--active {
   background: #e7955a;
-  border-radius: 50%;
+  border: 1px solid white;
 }
 
 .il-calendar--container .il-calendar--content .il-calendar--front .il-current--month .il-weeks .il-week--item span.il-today {
@@ -10099,7 +10101,7 @@ nav.il-nav--main ul.il-nav--list li a.il-nav--link {
 
 .il-calendar--container .il-calendar--controller .il-calendar--controller__content .il-calendar--events ul.il-timeline--list li,
 .il-calendar--container .il-calendar--controller .il-calendar--controller__content .il-calendar--events ul.il-add--events li {
-  margin: 0.25rem 0;
+  margin: 0.15rem 0;
 }
 
 .il-calendar--container .il-calendar--controller .il-calendar--controller__content .il-calendar--events ul.il-timeline--list {
@@ -10109,7 +10111,7 @@ nav.il-nav--main ul.il-nav--list li a.il-nav--link {
 .il-calendar--container .il-calendar--controller .il-calendar--controller__content .il-calendar--events ul.il-timeline--list li {
   text-align: center;
   position: relative;
-  height: 30.7px;
+  height: 27.3px;
   width: 50px;
 }
 
@@ -10147,11 +10149,11 @@ nav.il-nav--main ul.il-nav--list li a.il-nav--link {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  height: 61.4px;
+  height: 56.6px;
   background: #89a6b4;
-  padding: 0 0.35rem;
+  padding: 0 .25rem;
   position: relative;
-  width: 61.4px;
+  width: 54.6px;
   text-align: center;
 }
 
@@ -10283,7 +10285,7 @@ tr {
           justify-content: center;
   font-size: 0.89rem;
   color: #c9baba;
-  height: 61.4px;
+  height: 54.6px;
 }
 
 .il-calendar--container .il-calendar--search form.il-form--search input[type='search'] {

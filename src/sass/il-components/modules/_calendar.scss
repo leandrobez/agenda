@@ -1,18 +1,19 @@
 /** mixin*/
-@function toPx($rem){
+@function toPx($rem) {
   $un: 16;
   $convert: $un * $rem * 1px;
   @return $convert;
 }
 
+
 /**metrics*/
-$calendar-height: 750px;
-$calendar-controller-height: 710px;
+$calendar-height: 720px;
+$calendar-controller-height: 690px;
 $calendar-content-width: 420px;
 $li-height: $calendar-controller-height/21;
 $shadow-y: 15px;
 $width-time-line: 50px;
-$height-event-item: ($calendar-controller-height/10 - 0.6 * toPx(1));
+$height-event-item: ($calendar-controller-height/10 - 0.9 * toPx(1));
 $padding-table-event: $width-time-line + $height-event-item + 7px;
 $search-content-width: 37.2%;
 $width-search: 100% - $search-content-width;
@@ -23,7 +24,7 @@ $week-color: #87d110;
 $week-today: #0aaf41;
 $week-active: #e7955a;
 $week-hover: #2aaaba;
-$week-next: #4b4646;
+$week-next: #646880;
 $back-content: #2b4450;
 $back-content-dark: darken($back-content, 10%);
 $back-controller: #678797;
@@ -35,7 +36,7 @@ $li-background-odd: #796a6a;
 $li-color: #1a2220;
 
 .il-calendar--container {
-  top: 2rem;
+  top: 1.5rem;
   margin-bottom: 1rem;
   align-items: center;
   display: flex;

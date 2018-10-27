@@ -40,6 +40,14 @@ class eventsToDo {
         }*/
   }
 
+  editEvent(index, el) {
+    alert('Eu vou editar o evento ' + index);
+  }
+
+  editRemove(index, el) {
+    alert('Eu vou remover o evento ' + index);
+  }
+
   setNew() {
     let events = this.events;
     let indice = events.length - 1;
@@ -81,13 +89,41 @@ class eventsToDo {
     return result;
   }
 
+  editEvent(event) {
+    client = prompt('Para que é esse evento',event.client);
+    target = prompt('Que tipo da ação será realizada? Carga ou Descarga?',event.target);
+    transport = prompt('Qual o tipo de transporte?', event.transport);
+    tara =  prompt('',event.tara);
+    target = prompt(
+      'Que tipo da ação será realizada? Carga ou Descarga?',
+      event.target
+    );
+    status = prompt(
+      'Que status deseja utilizar?',
+      event.status
+    );
+   
+    let newEvent = {
+      start: event.start,
+      details: {
+        target: target,
+        transport: transport,
+        tara: tara,
+        cod: event.cod,
+        client: client,
+        status: 'previsto'
+      }
+    };
+    return newEvent;
+  }
+
   generateEvent(start, key) {
     let client = this.databank[key];
     let target = 'Carga';
     let transport = 'Caminhão';
     let tara = '14ton';
     target = prompt(
-      'Que tipo da ação será realizada? Carga ou Descarga',
+      'Que tipo da ação será realizada? Carga ou Descarga?',
       target
     );
     transport = prompt('Qual o tipo de transporte?', transport);

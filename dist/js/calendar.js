@@ -92,11 +92,12 @@ const getGridDays = () => {
     }
     if (div != 0 && div <= 3) {
       let next = j+1;
-      let excetion = days - (j*7);
-      let restDay= j*7;
+      let excetion = 35 - days ;//days - (j*7);
+      //let restDay= j*7;
       for (i = 1; i <= excetion; i++) {
-        restDay++
-        week.push(restDay);
+        //restDay++
+        week.push(i);
+        //console.log(restDay)
       }
       gridWeek[next] = week;
       weekDays.push(gridWeek[next]);
