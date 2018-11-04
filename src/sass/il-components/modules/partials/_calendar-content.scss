@@ -12,7 +12,10 @@
       border-bottom: 1px solid rgba(73, 114, 133, 0.6);
       display: flex;
       justify-content: space-between;
-      padding: 30px 40px;
+      padding: 20px 30px;
+      @media #{$medium-and-up} {
+        padding: 30px 40px;
+      }
       & h1 {
         color: #dfebed;
         font-size: 1.4em;
@@ -30,7 +33,10 @@
       }
     }
     & .il-current--month {
-      padding: 30px 40px;
+      padding: 20px 30px;
+      @media #{$medium-and-up} {
+        padding: 30px 40px;
+      }
       & ul.il-weeks--days,
       & .il-weeks {
         font-size: 1.3rem;
@@ -48,7 +54,6 @@
       }
       & .il-weeks {
         flex-direction: column;
-
         & .il-week--item {
           display: flex;
 
@@ -58,7 +63,10 @@
             color: #dfebed;
             line-height: 50px;
             text-align: center;
-            //width: 50px;
+            font-size: 18px;
+            @media #{$medium-and-up} {
+              font-size: 22px;
+            }
             height: 50px;
             &.il-last--month {
               opacity: 0.3;
@@ -83,18 +91,6 @@
               font-weight: 600;
               border-radius: 50%;
             }
-
-            /*&.il-event {
-                position: relative;
-                &:after {
-                  content: '•';
-                  color: #f78536;
-                  font-size: 1.7rem;
-                  position: absolute;
-                  right: -4px;
-                  top: -4px;
-                }
-              }*/
 
             &:hover {
               color: $week-hover;

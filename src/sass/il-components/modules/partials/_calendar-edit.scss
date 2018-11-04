@@ -1,5 +1,5 @@
-.il-calendar--search {
-  position: fixed;
+.il-calendar--edit {
+  position: absolute;
   z-index: 2;
   top: 0;
   left: -100%;
@@ -10,35 +10,26 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  border-radius: 60px;
   transition: 450ms;
-  & form.il-form--search {
-    text-align: center;
-    display: flex;
-    justify-content: center;
+  overflow: hidden;
+  & form.il-form--edit {
+    text-align: center;   
     font-size: 0.89rem;
     color: rgb(182, 161, 161);
-    height: $height-event-item;
-    & input[type='search'] {
-      border: none;
-      outline: none;
-      background-color: transparent;
-      padding: 0.35rem 0.15rem;
-      color: $li-background-plus;
-    }
-
-    & i {
-      color: rgb(131, 119, 119);
-      margin: auto 0.2rem;
-      line-height: 40px;
-      cursor: pointer;
-      width: 40px;
-      height: 40px;
-      transition: 450ms;
-      &:hover {
-        transition: 450ms;
-        border: 1px solid $li-background;
-        border-radius: 50%;
+    //height: $height-event-item;
+    & .il-form--fields {
+      padding: 0.35rem 0;
+      display: flex;
+      flex-direction: column;
+      & input[type='search'],
+      & input[type='text'] {
+        margin: .35rem 0;
+        border: 1px solid #837676;
+        border-radius: 4px;
+        outline: none;
+        background-color: transparent;
+        padding: 0.35rem 0.15rem;
+        color: $li-background-plus;
       }
     }
   }
@@ -72,14 +63,15 @@
       margin: 0.45rem 2rem;
     }
   }
-  &.il-calendar--search__show {
+  &.il-calendar--edit__show {
     transition: 450ms;
-    width: 300px;    
-    top: 55%;
+    width: 300px;
+    top: 50%;
     left: auto;
+    transform: translateY(-50%);
+    //height: 100%;
     @media #{$medium-and-up} {
       width: $width-search;
-      top: 35%;
       left: $search-content-width/2;
     }
     opacity: 1;

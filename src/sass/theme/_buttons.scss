@@ -49,7 +49,12 @@ button.il-btn {
   &.il-btn--header{
       color: white;
   }
+  &.il-btn--submit{
+    background-color: #496797;
+    outline: none;
+  }
 }
+
 input[type='submit']:focus,
 a.il-btn:focus,
 button.il-btn:focus,

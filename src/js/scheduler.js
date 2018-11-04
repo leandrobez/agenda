@@ -23,7 +23,7 @@ class scheduler {
     this.monthCurrent = m;
   }
 
-  /**crete multiples strinf for html element use */
+  /**crete multiples string for html element use */
   setLabels() {
     let year = document.querySelector('.il-current--date h1.il-year'),
       today = document.querySelector('.il-current--date h1.il-today'),
@@ -47,7 +47,7 @@ class scheduler {
     return this.calendarStructure.monthLabels.long[m - 1];
   }
 
-  /**create a string fotm use in front end */
+  /**create a string for use in front end */
   getLabelData() {
     let label =
       'Data atual: ' +
@@ -81,26 +81,72 @@ class scheduler {
     return config;
   }
 
-  /**display month' days */
+  /***Create scheduler for o day */
+  saveScheduler(newCronogram, key) {
+    //
+  }
+
+  /**display month's days */
   makeWeeks(month) {
-    let weeks = this.calendar[month].weekDays;
-    let totalWeeks = weeks.length;
+    let weeks = this.calendar[month].weekday;
+    //console.log(this.calendar[month])
+    //let totalWeeks = weeks.length;
     let today = this.currentConfig.todayDay;
     let items = '';
     let html = '';
-
+    let classToday = '';
+    //let y = check.getFullYear();
+    let lastDayOfM = this.calendar[month].lastDayOfM;
     weeks.forEach((week, index) => {
-      if (totalWeeks != 4) {
-        let limit = this.calendarStructure.totalDays[
-          window.localStorage.getItem('monthCurrent')
-        ];
-      }
       html = '<div class="il-week--item">';
-      week.forEach(day => {
+      week.forEach((day, key) => {
+        if (today == day) {
+          classToday = 'class="il-today"';
+        } else {
+          classToday = '';
+        }
+        switch (index) {
+          case 0:
+            let checkPrev = week[6];
+            if (day > checkPrev) {
+              html += `<span class="il-next--month" onclick="changeDay(${day},this)" >${day}</span>`;
+            } else {
+              html += `<span ${classToday} onclick="changeDay(${day},this)" >${day}</span>`;
+            }
+            break;
+          case 1:
+            html += `<span ${classToday} onclick="changeDay(${day},this)" >${day}</span>`;
+            break;
+          case 2:
+            html += `<span ${classToday} onclick="changeDay(${day},this)" >${day}</span>`;
+            break;
+          case 3:
+            html += `<span ${classToday} onclick="changeDay(${day},this)" >${day}</span>`;
+            break;
+          case 4:
+            let checkNext = week[0];
+            if (day < checkNext) {
+              html += `<span class="il-next--month" onclick="changeDay(${day},this)">${day}</span>`;
+            } else {
+              html += `<span ${classToday} onclick="changeDay(${day},this)" >${day}</span>`;
+            }
+            break;
+        }
+      });
+      html += '</div>';
+      items += html;
+    });
+    settings.divWeeks.innerHTML = items;
+    /*
+    weeks.forEach((week, index) => {
+      html = '<div class="il-week--item">';
+      //if(week.length<7){
+        //console.log(week)
+      //}
+      week.forEach((day, key) => {
         if (day == today && index == 0) {
           html += `<span class="il-today" onclick="changeDay(${day},this)" >${day}</span>`;
         } else {
-          
           if (index == totalWeeks - 1) {
             if (day == 1 || day == 2 || day == 3 || day == 4 || day == 5) {
               html += `<span class="il-next--month" onclick="changeDay(${day},this)">${day}</span>`;
@@ -108,6 +154,7 @@ class scheduler {
               html += `<span onclick="changeDay(${day},this)" >${day}</span>`;
             }
           } else {
+            //alert('oi')
             html += `<span onclick="changeDay(${day},this)" >${day}</span>`;
           }
         }
@@ -115,12 +162,11 @@ class scheduler {
       html += '</div>';
       items += html;
     });
-    settings.divWeeks.innerHTML = items;
+    settings.divWeeks.innerHTML = items;*/
   }
 
   /**check if the current month is igual to calendar */
   checkCurrentMont(m) {
-    //console.log()
     let storageConfig = JSON.parse(window.localStorage.getItem('config'));
     if (storageConfig.todayMonth == m) {
       return storageConfig.todayDay;
@@ -128,7 +174,7 @@ class scheduler {
     return false;
   }
 
-  /**display Calendar */
+  /**display the Calendar */
   displayCalendar() {
     let currentConfig = this.getCurrentConfig();
     this.setCurrentConfig(currentConfig);
@@ -141,25 +187,8 @@ class scheduler {
     this.makeWeeks(monthKey);
   }
 
-  /**display NextCalendar */
+  /**display next month to the Calendar **
   displayChangeCalendar() {
-    
-    let currentConfig = this.getCurrentConfig();
-    let nextMonth = JSON.parse(window.localStorage.getItem('monthCurrent'));
-    let check = this.checkCurrentMont(nextMonth);
-    if (!check) {
-      this.setTodayCurrent(1);
-      currentConfig.todayDay = 1;
-    } else {
-      this.setTodayCurrent(check);
-      currentConfig.todayDay = check;
-    }
-    this.setMonthCurrent(nextMonth);
-    currentConfig.todayMonth = nextMonth;
-    /**nova configuração do calendario */
-    this.setCurrentConfig(currentConfig);
-    let monthKey = this.getMonthKey(nextMonth);
-    this.setLabels();
-    this.makeWeeks(monthKey);
-  }
+
+  }*/
 }

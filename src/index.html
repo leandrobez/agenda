@@ -4,31 +4,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <meta name="description" content="Um novo conceito em estúdio de pilates." />
-    <meta name="keywords" content="pilates,corealign,reabilitação,fisioterapia,saúde,estúdio,studio" />
+    <meta name="description" content="Sistema OnLine de Agendamento de Carga e Descarga de Veículos." />
+    <meta name="keywords" content="agenda,scheduler,todo,calendarrio,calendar" />
     <meta http-equiv="content-language" content="pt-br" />
     <meta name="author" content="www.internetlojas.com" />
-    <title>Empresa XXXyyZ - Agendamentos</title>
+    <title>Empresa XXXyyZ - Agenda para Carge e Descarga de Veículos</title>
     <link rel="stylesheet" type="text/css" href="css/styles.css" />
 </head>
 
 <body>
     <div class="il-container">
+
         <!--HEADER-->
         <header class="il-container--item il-header il-color-background--primary">
             <div class="il-container--wrapper">
                 <h1 class="text-center il-color-texture--border il-title1--section">Sistema de Agendamento de Carga e
-                    Descarga</h1>
+                    Descarga de Veículos</h1>
                 <h4>Agenda da semana - <span id="il-data"></span></h4>
             </div>
         </header>
+
         <!--nav-->
         <nav class="il-nav--main il-color-background--dark">
             <div class="il-container--wrapper">
                 <ul class="il-nav--list">
                     <li>
-                        <a href="#" class="il-nav--link generic-anchor">
-                            vai a imagem
+                        <a href="#" class="il-brand">
+                            <img src="images/operators/operator1.png" alt="operator" class="il-responsive--image il-circular il-operator">
                         </a>
                     </li>
                     <li>
@@ -37,6 +39,7 @@
                         </a>
                     </li>
                 </ul>
+
             </div>
         </nav>
 
@@ -83,77 +86,25 @@
                     </form>
                     <div class="il-search--result"></div>
                 </div>
+                <!--event edit-->
+                <div class="il-calendar--edit">
+                    <form id="il-event" class="il-form--edit">
+                        <div class="il-form--fields">
+                            <input id="start" type="text" name="start" value="" placeholder="Hora do início">
+                            <input id="target" type="text" name="target" value="" placeholder="Qual evento - carga ou descarga?">
+                            <input id="status" type="text" name="status" value="" placeholder="Situação até o presente momento">
+                            <input id="transport" type="text" name="transport" value="" placeholder="Qual o tipo de veículo a ser agendado?">
+                            <input id="tara" type="text" name="tara" value="" placeholder="Peso em toneladas">
+                            <input id="client" type="text" name="client" value="" placeholder="Nome do cliente">
+                            <input id="event-key" type="hidden" name="event-key">
+                            <button id="btn-edit" class="il-btn il-btn--submit">Salvar</button>
+                        </div>
+                        <!--<input type="search" name="search" class="il-input--seach" placeholder="Escolha o cliente">
+                        <i id="il-form-close" class="mdi mdi-36px mdi-close"></i>-->
+                    </form>
+                </div>
             </div>
 
-            <!--/* ====== Dias da Semana ====== */--
-            <ul class="il-scheduler--week" id="week-list">
-            </ul>-->
-            <!--/* ====== listagem do agendamento ====== */--
-            <div class="il-scheduler--teacher-content il-scheduler--table" id="il-scheduler">
-                <table class="il-table il-zebra">
-                    <caption>Listagem do Agendamento</caption>
-                    <thead>
-                        <tr>
-
-                            <th id="tr-day">Horário</th>
-                            <th>Aula</th>
-                            <th>Aluno Previsto</th>
-                            <th>Aluno Presente</th>
-                            <th>Observação</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-
-                            <td>07:00 - 08:00</td>
-                            <td>CoreAlign</td>
-                            <td>
-                                <ul class="il-students--previstos">
-                                    <li>aluno1</li>
-                                    <li>aluno2</li>
-                                    <li>aluno3</li>
-                                </ul>
-                            </td>
-                            <td>
-                                <ul class="il-students--presents">
-                                    <li>aluno1</li>
-                                    <li></li>
-                                    <li>aluno3</li>
-                                </ul>
-                            </td>
-                            <td>
-                                <ul class="il-students--report">
-                                    <li>O Aluno 2 faltou</li>
-                                    <li>Houve substituição do Aluno 2 pelo Aluno 5</li>
-                                </ul>
-                            </td>
-                        </tr>
-                        <tr class="active">
-                            <td>08:00 - 09:00</td>
-                            <td>CoreAlign</td>
-                            <td>
-                                <ul class="il-students--previstos">
-                                    <li>aluno6</li>
-                                    <li>aluno7</li>
-                                    <li>aluno8</li>
-                                </ul>
-                            </td>
-                            <td>
-                                <ul class="il-students--presents">
-                                    <li>aluno6</li>
-                                    <li>aluno7</li>
-                                    <li>aluno8</li>
-                                </ul>
-                            </td>
-                            <td>
-                                <ul class="il-students--report">
-                                    <li>Nenhuma alteração</li>
-                                </ul>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>-->
         </div>
 
         <script src="js/commom/axios.js"></script>

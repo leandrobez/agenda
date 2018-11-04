@@ -40,10 +40,15 @@ $li-color: #1a2220;
   margin-bottom: 1rem;
   align-items: center;
   display: flex;
+  flex-direction: column;
+  @media #{$large-and-up} {
+    flex-direction: row;
+  }
   width: 100%;
   height: $calendar-height;
   position: relative;
   @import './partials/calendar-content';
   @import './partials/calendar-controller';
   @import './partials/calendar-search';
+  @import './partials/calendar-edit';
 }

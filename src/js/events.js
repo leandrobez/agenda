@@ -40,8 +40,12 @@ class eventsToDo {
         }*/
   }
 
-  editEvent(index, el) {
-    alert('Eu vou editar o evento ' + index);
+  editEvent(indice, event) {
+    //let events = this.events;
+    //let indice = events.length - 1;
+    //console.log(indice,event)
+   // let agenda = window.localStorage.getItem('agenda');
+   // console.log(agenda[0].cronogram[0].events[indice]);
   }
 
   editRemove(index, el) {
@@ -89,7 +93,7 @@ class eventsToDo {
     return result;
   }
 
-  editEvent(event) {
+  /*editEvent(event) {
     client = prompt('Para que é esse evento',event.client);
     target = prompt('Que tipo da ação será realizada? Carga ou Descarga?',event.target);
     transport = prompt('Qual o tipo de transporte?', event.transport);
@@ -115,7 +119,7 @@ class eventsToDo {
       }
     };
     return newEvent;
-  }
+  }*/
 
   generateEvent(start, key) {
     let client = this.databank[key];

@@ -1,0 +1,22 @@
+img.il-responsive--image {
+  display: block;
+  padding: 0;
+  width: 100%;
+  height: auto;
+  &.il-circular {
+    border-radius: 50%;
+    border: 2px solid white;
+  }
+  &.il-img--small {
+    max-width: 220px;
+    padding: 3px;
+  }
+  &.il-img--medium {
+    max-width: 380px;
+    padding: 2px;
+    border-width: 1px;
+  }
+}
+img.il-operator {
+  max-width: 80px;
+}

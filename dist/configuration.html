@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="description" content="Um novo conceito em estúdio de pilates." />
+    <meta name="keywords" content="pilates,corealign,reabilitação,fisioterapia,saúde,estúdio,studio" />
+    <meta http-equiv="content-language" content="pt-br" />
+    <meta name="author" content="www.internetlojas.com" />
+    <title>Empresa XXXyyZ - Agendamentos</title>
+    <link rel="stylesheet" type="text/css" href="css/styles.css" />
+</head>
+
+<body>
+    <div class="il-container">
+        <!--HEADER-->
+        <header class="il-container--item il-header il-color-background--primary">
+            <div class="il-container--wrapper">
+                <h1 class="text-center il-color-texture--border il-title1--section">Sistema de Agendamento de Carga e
+                    Descarga</h1>
+                <h4>Agenda da semana - <span id="il-data"></span></h4>
+            </div>
+        </header>
+        <!--nav-->
+        <nav class="il-nav--main il-color-background--dark">
+            <div class="il-container--wrapper">
+                <ul class="il-nav--list">
+                    <li>
+                        <a href="#" class="il-nav--link generic-anchor">
+                            vai a imagem
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#ficha" class="il-nav--link generic-anchor">
+                            Operador Beltrano Rico
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <main>
+            <section class="il-section il-section--configuration">
+
+                <div class="il-container--wrapper">
+                    <h1 class="il-section--title">Faça a configuração de sua agenda</h1>
+                    <div class="il-configuration">
+                        <form id="il-scheduler--configuration" class="il-form--configuration">
+                            <legend>Parâmetros para atividades</legend>
+                            <div class="il-form--fields">
+                                <label for="work-start">Início das atividades</label>
+                                <input id="work-start" type="text" name="works-start" value="07:00" class="il-input"
+                                    placeholder="Início das atividades 7" autofocus required pattern="([0-1]{1}[0-9]{1}|20|21|22|23):[0-5]{1}[0-9]{1}"
+                                    title="Defina o horário com dois dígitos para a hora seguido de : e os minutos de 00 a 59.">
+                                <div id="work-start--error" class="il-input--error"></div>
+                                <label for="work-end">Encerramento das atividades</label>
+                                <input id="work-end" type="text" name="works-end" value="18" class="il-input"
+                                    placeholder="Encerramento das atividades 18" required pattern="([0-1]{1}[0-9]{1}|20|21|22|23):[0-5]{1}[0-9]{1}"
+                                    title="Defina o horário com dois dígitos para a hora seguido de : e os minutos de 00 a 59.">
+                                <label for="work-interval">Tempo destinado para cada atividade</label>
+                                <input id="work-interval" type="text" name="works-interval" value="30" class="il-input"
+                                    placeholder="Tempo disponibilizado para cada atividade" required required pattern="[0-6]{1}[0]{1}"
+                                    title="Defina o tempo com dois dígitos para os minutos">
+                            </div>
+
+                            <legend>Campos para os eventos</legend>
+                            <div class="il-form--fields">
+                                <label for="field1">Campo 1</label>
+                                <input id="field1" type="text" name="field1" value="" class="il-input"
+                                    placeholder="Campo 1 a ser mostrado no evento">
+                            </div>
+                            <i class="mdi mdi-24px mdi-plus il-field--add" id="il-field-add" title="Clique para adiciona outro campo"></i>
+                            <!--<legend>Banco de dados</legend>
+                            <div class="il-form--fields">
+                                <input type="url" name="url-bd" class="il-input" placeholder="local onde estará armazenado o banco"
+                                    disabled>
+                            </div>-->
+                            <button class="il-btn il-btn--small il-btn--submit" type="submit">Enviar</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+
+</html>

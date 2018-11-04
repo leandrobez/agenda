@@ -1,0 +1,48 @@
+.il-configuration {
+  padding: 0.45rem;
+  display: flex;
+  flex-direction: column;
+  form.il-form--configuration {
+    display: flex;
+    flex-direction: column;
+    & legend{
+        border: 1px solid #ccc;
+        box-shadow:0 0 5px rgba(255, 0, 0, .8);
+    }
+    & .il-form--fields {
+      padding: 0.45rem 0;
+      display: flex;
+      flex-direction: column;
+      & label {
+        font-size: .9rem;
+        color: black;
+        font-weight: bold;
+      }
+      & input[type='text'].il-input {
+        outline: none;
+        border: 1px solid rgb(131, 125, 125);
+        padding: 0.35rem 0.25rem;
+        width: 350px;
+        margin: 0.15rem 0;
+        font-size: 14px;
+        border-radius: 3px;
+        &:invalid, &:required{
+            border-color: #e88;
+        }
+      }
+    }
+    & i.il-field--add{
+        cursor: pointer;
+        color: blue;
+        width: 40px;
+        height: 40px;
+        margin-bottom: 10px;
+        &:hover{
+            font-weight: 700;
+            color: red;
+            padding: .25rem;
+            border: 1px solid #cdcdcd;
+        }
+    }
+  }
+}

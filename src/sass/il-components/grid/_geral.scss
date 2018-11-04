@@ -10,29 +10,6 @@ ul {
   margin: 0;
 }
 
-
-img {
-  display: block;
-  width: 100%;
-  &.il-img--circle {
-    border-radius: 50%;
-    border: 2px solid white;
-  }
-  &.il-img--small {
-    max-width: 220px;
-    padding: 3px;
-  }
-  &.il-img--medium {
-    max-width: 380px;
-    padding: 2px;
-    border-width: 1px;
-  }
-  &.reponsive-img {
-    max-width: 100%;
-    height: auto;
-  }
-}
-
 a.generic-anchor {
   color: $primary-light-blue;
   &:visited {
